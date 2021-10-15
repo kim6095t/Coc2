@@ -17,9 +17,18 @@ public class Unit : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float Hp;
 
+
     private Tower target = null;
     private float nextAttackTime = 0.0f;
     float distanceBetween;
+    Animator anim;
+
+    bool isMove;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -27,38 +36,66 @@ public class Unit : MonoBehaviour
             distanceBetween = Vector3.Distance(target.transform.position, transform.position);
 
         if (target == null)
+        {
+            Debug.Log("1");
             SearchTower();
-        else if (distanceBetween > attackRadius && distanceBetween <= searchRadius)
-            MoveTo();
+        }
         else if (distanceBetween <= attackRadius)
+        {
+            Debug.Log("3");
             AttackTower();
+        }
+        else
+        {
+            MoveTo();
+        }
     }
 
 
     private void SearchTower()
     {
+
         Collider[] targets = Physics.OverlapSphere(transform.position, searchRadius, searchMask);
         if (targets.Length > 0)
         {
-            Collider pick = targets[Random.Range(0, targets.Length - 1)];
+            Collider pick = targets[0];
             Tower tower = pick.GetComponent<Tower>();
 
             if (tower != null)
                 target = tower;
             Debug.Log($"Å¸°Ù: {target}");
         }
+        else
+        {
+            searchRadius += 0.1f;
+        }
+
+
     }
 
     private void MoveTo()
     {
+        isMove = true;
+
+        Vector3 direction = (target.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = lookRotation;
+
         transform.position = Vector3.MoveTowards(transform.position, 
             target.transform.position, moveSpeed * Time.deltaTime);
+
+        anim.SetBool("isMove",isMove);
     }
 
     private void AttackTower()
     {
-        if (nextAttackTime <= Time.time)
+        isMove = false;
+        anim.SetBool("isMove", isMove);
+        searchRadius = attackRadius;
+
+        if (nextAttackTime <= Time.time && target != null)
         {
+            anim.SetTrigger("onAttack");
             nextAttackTime = Time.time + attackRate;
             target.OnDamaged(attackPower);
         }
@@ -75,6 +112,7 @@ public class Unit : MonoBehaviour
 
     private void OnDead()
     {
+        anim.SetTrigger("onDie");
         Destroy(gameObject);
     }
 

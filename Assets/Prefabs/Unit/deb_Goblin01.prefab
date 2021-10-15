@@ -788,6 +788,7 @@ GameObject:
   - component: {fileID: 1553080329}
   - component: {fileID: 1553080330}
   - component: {fileID: 1553080326}
+  - component: {fileID: 1465200985}
   m_Layer: 6
   m_Name: deb_Goblin01
   m_TagString: Untagged
@@ -858,11 +859,30 @@ MonoBehaviour:
   searchMask:
     serializedVersion: 2
     m_Bits: 128
-  moveSpeed: 1
   attackRadius: 2
   attackRate: 0.5
   attackPower: 10
-  Hp: 1000
+  moveSpeed: 1
+  Hp: 30
+--- !u!95 &1465200985
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314104455382831442}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a0c20659838f8e147847eda60ff6bdb5, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9e3cdc50972d05f4fafcb2b1d8606790, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5314104455382831444
 GameObject:
   m_ObjectHideFlags: 0

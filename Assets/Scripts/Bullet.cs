@@ -34,11 +34,14 @@ public class Bullet : MonoBehaviour
         Vector3 direction = target.transform.position - pivot.position;
         Quaternion lookAt = Quaternion.LookRotation(direction);
 
-        pivot.position = Vector3.MoveTowards(pivot.position, target.transform.position, moveSpeed * Time.deltaTime);
+        Vector3 hitPoint= target.transform.position;
+        hitPoint.y = pivot.transform.position.y;
+
+        pivot.position = Vector3.MoveTowards(pivot.position, hitPoint, moveSpeed * Time.deltaTime);
         pivot.rotation = Quaternion.Lerp(pivot.rotation, lookAt, 10f * Time.deltaTime);
 
         // 타겟과 나의 거리가 (많이) 가까워 졌다면.
-        if (Vector3.Distance(pivot.position, target.transform.position) <= float.Epsilon)
+        if (Vector3.Distance(pivot.position, hitPoint) <= float.Epsilon)
         {
             HitTarget();
             Crushed();
