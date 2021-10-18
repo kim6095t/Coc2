@@ -176,10 +176,10 @@ MonoBehaviour:
   searchMask:
     serializedVersion: 2
     m_Bits: 64
-  attackPower: 10
-  moveSpeed: 0
-  bullet: {fileID: 0}
-  bulletPivot: {fileID: 0}
+  attackPower: 0
+  moveSpeed: 10
+  bullet: {fileID: 6678053077987263944, guid: e0c587c3913dbdb488f625f1ca25eb0f, type: 3}
+  bulletPivot: {fileID: 7206637451664692237}
   attackRate: 0.3
   pivot: {fileID: 5970808299247770572}
   Hp: 50

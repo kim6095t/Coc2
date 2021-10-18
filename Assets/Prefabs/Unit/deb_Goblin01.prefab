@@ -789,6 +789,7 @@ GameObject:
   - component: {fileID: 1553080330}
   - component: {fileID: 1553080326}
   - component: {fileID: 1465200985}
+  - component: {fileID: 4467189568148736564}
   m_Layer: 6
   m_Name: deb_Goblin01
   m_TagString: Untagged
@@ -855,7 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5699b1782638a47a56f4ab2df7b706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  searchRadius: 10
+  searchRadius: 2
   searchMask:
     serializedVersion: 2
     m_Bits: 128
@@ -863,7 +864,8 @@ MonoBehaviour:
   attackRate: 0.5
   attackPower: 10
   moveSpeed: 1
-  Hp: 30
+  Hp: 1e+14
+  agent: {fileID: 4467189568148736564}
 --- !u!95 &1465200985
 Animator:
   serializedVersion: 3
@@ -883,6 +885,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &4467189568148736564
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314104455382831442}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 1
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5314104455382831444
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,6 @@ public class Bullet : MonoBehaviour
             Crushed();
             return;
         }
-
         MoveTo();
     }
 

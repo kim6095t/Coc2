@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Unit : MonoBehaviour
     [Header("etc")]
     [SerializeField] float moveSpeed;
     [SerializeField] float Hp;
+    [SerializeField] NavMeshAgent agent;    // 네비게이션 유저.
 
 
     private Tower target = null;
@@ -37,12 +39,10 @@ public class Unit : MonoBehaviour
 
         if (target == null)
         {
-            Debug.Log("1");
             SearchTower();
         }
         else if (distanceBetween <= attackRadius)
         {
-            Debug.Log("3");
             AttackTower();
         }
         else
@@ -67,23 +67,25 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            searchRadius += 0.1f;
+            searchRadius = Mathf.Clamp(searchRadius *= 1.2f, attackRate, 50);
         }
 
-
+        anim.SetBool("isMove", isMove);
     }
 
     private void MoveTo()
     {
         isMove = true;
 
+        agent.SetDestination(target.transform.position);
+        /*
         Vector3 direction = (target.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = lookRotation;
 
         transform.position = Vector3.MoveTowards(transform.position, 
-            target.transform.position, moveSpeed * Time.deltaTime);
-
+              target.transform.position, moveSpeed * Time.deltaTime);
+        */
         anim.SetBool("isMove",isMove);
     }
 
