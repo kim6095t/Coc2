@@ -54,10 +54,10 @@ public class UnitManager : MonoBehaviour
     private void CreateUnit(SetTile setTile)
     {
         // 선택한 타일이 없거나 타일에 이미 설치가 되어있는 경우.
-        if (setTile == null || setTile.IsSetUnit)
+        if (setTile == null)
             return;
 
-        Unit newUnit = Instantiate(UnitPrefab, transform);
+        Unit newUnit = Instantiate(UnitPrefab);
         setTile.Set(newUnit);
     }
 

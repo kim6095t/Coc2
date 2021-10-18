@@ -17,19 +17,23 @@ public class Unit : MonoBehaviour
     [Header("etc")]
     [SerializeField] float moveSpeed;
     [SerializeField] float Hp;
-    [SerializeField] NavMeshAgent agent;    // 네비게이션 유저.
+
 
 
     private Tower target = null;
     private float nextAttackTime = 0.0f;
     float distanceBetween;
     Animator anim;
+    NavMeshAgent agent;
 
     bool isMove;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.enabled = false;
+        agent.enabled = true;
     }
 
     void Update()
@@ -51,7 +55,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-
     private void SearchTower()
     {
 
@@ -63,7 +66,6 @@ public class Unit : MonoBehaviour
 
             if (tower != null)
                 target = tower;
-            Debug.Log($"타겟: {target}");
         }
         else
         {
@@ -78,14 +80,6 @@ public class Unit : MonoBehaviour
         isMove = true;
 
         agent.SetDestination(target.transform.position);
-        /*
-        Vector3 direction = (target.transform.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = lookRotation;
-
-        transform.position = Vector3.MoveTowards(transform.position, 
-              target.transform.position, moveSpeed * Time.deltaTime);
-        */
         anim.SetBool("isMove",isMove);
     }
 
@@ -105,7 +99,6 @@ public class Unit : MonoBehaviour
 
     public void OnDamaged(float damaged)
     {
-        Debug.Log($"타워데미지: {damaged}");
         Hp -= damaged;
 
         if (Hp <= 0)

@@ -42,7 +42,6 @@ public class Tower : MonoBehaviour
 
             if (enemy != null)
                 target = enemy;
-            Debug.Log($"Å¸°Ù: {target}");
         }
     }
 
@@ -82,7 +81,6 @@ public class Tower : MonoBehaviour
     }
     public void OnDamaged(float damaged)
     {
-        Debug.Log($"À¯´Öµ¥¹ÌÁö: {damaged}");
         Hp -= damaged;
 
         if (Hp <= 0)
