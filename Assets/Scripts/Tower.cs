@@ -79,12 +79,17 @@ public class Tower : MonoBehaviour
             newBullet.Shoot(target, moveSpeed, attackPower);
         }
     }
-    public void OnDamaged(float damaged)
+    public bool OnDamaged(float damaged)
     {
         Hp -= damaged;
 
         if (Hp <= 0)
+        {
             OnDestroy();
+            return false;
+        }
+        else
+            return true;
     }
 
     private void OnDestroy()

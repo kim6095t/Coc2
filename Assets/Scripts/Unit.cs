@@ -35,6 +35,7 @@ public class Unit : MonoBehaviour
     bool destTower;
     bool destWall;
 
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -46,31 +47,27 @@ public class Unit : MonoBehaviour
 
     void Update()
     {
-        if (targetTower != null && destTower)
+        if (targetTower != null && targetWall != null)
         {
-            distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
-            Debug.Log($"Tower: {agent.SetDestination(targetTower.transform.position)}");
-            Debug.Log($"Wall: {agent.SetDestination(targetWall.transform.position)}");
+            if (destWall != true)
+                distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
+            else
+                distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
         }
-        if (targetWall != null && destWall)
-            distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
 
-        if (targetTower == null)
-        {
-            SearchTower(); 
+
+        if (targetWall == null)
             SearchWall();
-        }
+        else if (targetTower == null)
+            SearchTower(); 
         else if (distanceBetween <= attackRadius)
         {
-            Debug.Log("1");
-            if (agent.SetDestination(targetTower.transform.position))
+            if (destTower)
             {
-                Debug.Log("2");
                 AttackTower();
             }
-            if (agent.SetDestination(targetWall.transform.position))
+            if (destWall)
             {
-                Debug.Log("3");
                 AttackWall();
             }
         }
@@ -117,6 +114,7 @@ public class Unit : MonoBehaviour
         {
             searchWallRadius = Mathf.Clamp(searchWallRadius *= 1.2f, attackRate, 50);
         }
+        
         anim.SetBool("isMove", isMove);
     }
 
@@ -125,15 +123,27 @@ public class Unit : MonoBehaviour
     {
         isMove = true;
         anim.SetBool("isMove", isMove);
-   
-        agent.SetDestination(targetTower.transform.position);
 
-        if (agent.path.corners.Length > 1)      //자기 위치를 제외하고 코너의값을 들고있을 시
+        //검색된 타워위치로 목적지 설정
+        //목적지가 wall이면 넘어간다
+        if (destWall == false)
+        {
+            destTower = true;
+            destWall = false;
+            agent.SetDestination(targetTower.transform.position);
+        }
+
+        //타워경로중 탐색범위를 벗어나면 벽을 부순다.
+        if (agent.path.corners.Length > 1 && destWall == false)
         {
             for (int i = 0; i < agent.path.corners.Length; i++)
             {
                 if (Vector3.Distance(transform.position, agent.path.corners[i]) > searchTowerRadius)
+                {
                     agent.SetDestination(targetWall.transform.position);
+                    destTower = false;
+                    destWall = true;
+                }
             }
         }
 
@@ -149,12 +159,21 @@ public class Unit : MonoBehaviour
         isMove = false;
         anim.SetBool("isMove", isMove);
         searchTowerRadius = attackRadius;
+        searchWallRadius = attackRadius;
 
         if (nextAttackTime <= Time.time && targetTower != null)
         {
             anim.SetTrigger("onAttack");
             nextAttackTime = Time.time + attackRate;
-            targetTower.OnDamaged(attackPower);
+            destTower = targetTower.OnDamaged(attackPower);
+            if (!destTower)
+            {
+                Debug.Log("2");
+                destTower = false;
+                destWall = false;
+                targetTower = null;
+                targetWall = null;
+            }
         }
 
     }
@@ -162,13 +181,23 @@ public class Unit : MonoBehaviour
     {
         isMove = false;
         anim.SetBool("isMove", isMove);
+        searchTowerRadius = attackRadius;
         searchWallRadius = attackRadius;
 
         if (nextAttackTime <= Time.time && targetWall != null)
         {
             anim.SetTrigger("onAttack");
             nextAttackTime = Time.time + attackRate;
-            targetWall.OnDamaged(attackPower);
+            destWall = targetWall.OnDamaged(attackPower);
+            if (!destWall)
+            {
+                Debug.Log("3");
+                destTower = false;
+                destWall = false;
+                targetTower = null;
+                targetWall = null;
+            }
+
         }
     }
 
