@@ -27,6 +27,11 @@ public class Unit : MonoBehaviour
     private Wall targetWall = null;
     private float nextAttackTime = 0.0f;
     float distanceBetween;
+
+    float time;
+    Vector3 fstPosition;
+    Vector3 lstPosition;
+    
     Animator anim;
     NavMeshAgent agent;
     LineRenderer line;
@@ -43,6 +48,7 @@ public class Unit : MonoBehaviour
         line = GetComponent<LineRenderer>();
         agent.enabled = false;
         agent.enabled = true;
+        time = 3;
     }
 
     void Update()
@@ -53,6 +59,20 @@ public class Unit : MonoBehaviour
                 distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
             else
                 distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
+
+            if (time == 3)
+                fstPosition = transform.position;
+            else if (time < 0)
+            {
+                lstPosition = transform.position;
+                time = 3;
+
+                if (fstPosition == lstPosition)
+                {
+                    AttackWall();
+                }
+            }
+            time = time - Time.deltaTime;
         }
 
 
@@ -92,7 +112,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            searchTowerRadius = Mathf.Clamp(searchTowerRadius *= 1.2f, attackRate, 50);
+            searchTowerRadius = Mathf.Clamp(searchTowerRadius *= 1.2f, attackRate, 100);
         }
 
         anim.SetBool("isMove", isMove);
@@ -112,7 +132,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            searchWallRadius = Mathf.Clamp(searchWallRadius *= 1.2f, attackRate, 50);
+            searchWallRadius = Mathf.Clamp(searchWallRadius *= 1.2f, attackRate, 100);
         }
         
         anim.SetBool("isMove", isMove);
@@ -214,6 +234,7 @@ public class Unit : MonoBehaviour
         anim.SetTrigger("onDie");
         Destroy(gameObject);
     }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

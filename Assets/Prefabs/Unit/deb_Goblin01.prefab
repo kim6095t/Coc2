@@ -860,11 +860,11 @@ MonoBehaviour:
   searchTowerRadius: 2
   searchTowerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   searchWallRadius: 2
   searchWallMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   attackRadius: 2
   attackRate: 0.5
   attackPower: 10
