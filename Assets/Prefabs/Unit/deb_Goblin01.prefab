@@ -857,11 +857,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5699b1782638a47a56f4ab2df7b706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  searchTowerRadius: 2
+  searchTowerRadius: 5
   searchTowerMask:
     serializedVersion: 2
     m_Bits: 128
-  searchWallRadius: 2
+  searchWallRadius: 0
   searchWallMask:
     serializedVersion: 2
     m_Bits: 512

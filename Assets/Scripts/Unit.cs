@@ -28,7 +28,6 @@ public class Unit : MonoBehaviour
     private float nextAttackTime = 0.0f;
     float distanceBetween;
 
-    float time;
     Vector3 fstPosition;
     Vector3 lstPosition;
     
@@ -48,7 +47,6 @@ public class Unit : MonoBehaviour
         line = GetComponent<LineRenderer>();
         agent.enabled = false;
         agent.enabled = true;
-        time = 3;
     }
 
     void Update()
@@ -59,44 +57,23 @@ public class Unit : MonoBehaviour
                 distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
             else
                 distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
-
-            if (time == 3)
-                fstPosition = transform.position;
-            else if (time < 0)
-            {
-                lstPosition = transform.position;
-                time = 3;
-
-                if (fstPosition == lstPosition)
-                {
-                    AttackWall();
-                }
-            }
-            time = time - Time.deltaTime;
         }
-
 
         if (targetWall == null)
             SearchWall();
         else if (targetTower == null)
-            SearchTower(); 
+            SearchTower();
         else if (distanceBetween <= attackRadius)
         {
             if (destTower)
-            {
                 AttackTower();
-            }
             if (destWall)
-            {
                 AttackWall();
-            }
         }
         else
-        {
             MoveTo();
-        }
-
     }
+    
 
     private void SearchTower()
     {
@@ -160,6 +137,7 @@ public class Unit : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, agent.path.corners[i]) > searchTowerRadius)
                 {
+                    Debug.Log("1");
                     agent.SetDestination(targetWall.transform.position);
                     destTower = false;
                     destWall = true;
@@ -178,8 +156,8 @@ public class Unit : MonoBehaviour
     {
         isMove = false;
         anim.SetBool("isMove", isMove);
-        searchTowerRadius = attackRadius;
-        searchWallRadius = attackRadius;
+        searchTowerRadius = 5f;
+        searchWallRadius = 0f;
 
         if (nextAttackTime <= Time.time && targetTower != null)
         {
@@ -201,8 +179,8 @@ public class Unit : MonoBehaviour
     {
         isMove = false;
         anim.SetBool("isMove", isMove);
-        searchTowerRadius = attackRadius;
-        searchWallRadius = attackRadius;
+        searchTowerRadius = 5f;
+        searchWallRadius = 0f;
 
         if (nextAttackTime <= Time.time && targetWall != null)
         {
@@ -217,7 +195,6 @@ public class Unit : MonoBehaviour
                 targetTower = null;
                 targetWall = null;
             }
-
         }
     }
 
@@ -235,7 +212,6 @@ public class Unit : MonoBehaviour
         Destroy(gameObject);
     }
 
-
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
@@ -249,5 +225,4 @@ public class Unit : MonoBehaviour
         UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.up, attackRadius);
     }
 #endif
-
 }
