@@ -23,7 +23,6 @@ public class Tower : MonoBehaviour
     private Unit target = null;
     private float nextAttackTime = 0.0f;
 
-
     void Update()
     {
         if (target == null)
@@ -86,10 +85,10 @@ public class Tower : MonoBehaviour
         if (Hp <= 0)
         {
             OnDestroy();
-            return false;
+            return true;
         }
         else
-            return true;
+            return false;
     }
 
     private void OnDestroy()

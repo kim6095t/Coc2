@@ -28,11 +28,9 @@ public class Unit : MonoBehaviour
     private float nextAttackTime = 0.0f;
     float distanceBetween;
 
-    Vector3 fstPosition;
-    Vector3 lstPosition;
-    
     Animator anim;
     NavMeshAgent agent;
+    NavMeshPath pathToTower;
     LineRenderer line;
 
     bool isMove;
@@ -44,13 +42,16 @@ public class Unit : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        
         line = GetComponent<LineRenderer>();
         agent.enabled = false;
         agent.enabled = true;
+        
     }
 
     void Update()
     {
+        pathToTower = new NavMeshPath();
         if (targetTower != null && targetWall != null)
         {
             if (destWall != true)
@@ -91,7 +92,6 @@ public class Unit : MonoBehaviour
         {
             searchTowerRadius = Mathf.Clamp(searchTowerRadius *= 1.2f, attackRate, 100);
         }
-
         anim.SetBool("isMove", isMove);
     }
 
@@ -111,7 +111,6 @@ public class Unit : MonoBehaviour
         {
             searchWallRadius = Mathf.Clamp(searchWallRadius *= 1.2f, attackRate, 100);
         }
-        
         anim.SetBool("isMove", isMove);
     }
 
@@ -120,36 +119,46 @@ public class Unit : MonoBehaviour
     {
         isMove = true;
         anim.SetBool("isMove", isMove);
+        agent.SetDestination(targetTower.transform.position);
 
-        //검색된 타워위치로 목적지 설정
-        //목적지가 wall이면 넘어간다
-        if (destWall == false)
+        agent.CalculatePath(targetTower.transform.position, pathToTower);           // 플레이어에게 통하는 경로의 유효성 검사.
+        Debug.Log(targetTower.transform.position);
+        Debug.Log(pathToTower.status);
+        Debug.Log(agent.CalculatePath(targetTower.transform.position, pathToTower));
+        if (pathToTower.status == NavMeshPathStatus.PathComplete)                  // 유효하다면.
         {
-            destTower = true;
-            destWall = false;
-            agent.SetDestination(targetTower.transform.position);
+            Debug.Log("유효");
+            agent.SetDestination(targetTower.transform.position);                   // 플레이어에게 이동.
+        }
+        else
+        {
+            Debug.Log("유효하지 않음");
+            agent.SetDestination(targetWall.transform.position);                   // 길이 유효하지 않다면 큰 범위를 탐색해 가장 가까운 적에게 이동, 공격한다.
         }
 
-        //타워경로중 탐색범위를 벗어나면 벽을 부순다.
         if (agent.path.corners.Length > 1 && destWall == false)
         {
             for (int i = 0; i < agent.path.corners.Length; i++)
             {
-                if (Vector3.Distance(transform.position, agent.path.corners[i]) > searchTowerRadius)
+                //미세한 값의 오차를 없애기 위해 0.5를 더한다
+                if (Vector3.Distance(transform.position, agent.path.corners[i]) > searchTowerRadius + 0.5)
                 {
-                    Debug.Log("1");
                     agent.SetDestination(targetWall.transform.position);
                     destTower = false;
                     destWall = true;
                 }
             }
         }
+        DrawLine();
+    }
 
+    private void DrawLine()
+    {
         // 라인 렌더러 그리기.        
         line.positionCount = agent.path.corners.Length;
         line.SetPositions(agent.path.corners);
         line.startColor = (targetTower == null) ? Color.green : Color.red;
-        line.endColor = (targetTower == null) ? Color.green : Color.red;  
+        line.endColor = (targetTower == null) ? Color.green : Color.red;
     }
 
     private void AttackTower()
@@ -164,9 +173,8 @@ public class Unit : MonoBehaviour
             anim.SetTrigger("onAttack");
             nextAttackTime = Time.time + attackRate;
             destTower = targetTower.OnDamaged(attackPower);
-            if (!destTower)
+            if (destTower)
             {
-                Debug.Log("2");
                 destTower = false;
                 destWall = false;
                 targetTower = null;
@@ -187,9 +195,8 @@ public class Unit : MonoBehaviour
             anim.SetTrigger("onAttack");
             nextAttackTime = Time.time + attackRate;
             destWall = targetWall.OnDamaged(attackPower);
-            if (!destWall)
+            if (destWall)
             {
-                Debug.Log("3");
                 destTower = false;
                 destWall = false;
                 targetTower = null;

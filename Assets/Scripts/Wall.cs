@@ -13,11 +13,10 @@ public class Wall : MonoBehaviour
         if (Hp <= 0)
         {
             OnDestroy();
-            Debug.Log("Wall destory");
-            return false;
+            return true;
         }
         else
-            return true;
+            return false;
     }
 
     private void OnDestroy()
