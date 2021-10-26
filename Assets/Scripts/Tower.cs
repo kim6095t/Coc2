@@ -85,10 +85,10 @@ public class Tower : MonoBehaviour
         if (Hp <= 0)
         {
             OnDestroy();
-            return true;
+            return false;
         }
         else
-            return false;
+            return true;
     }
 
     private void OnDestroy()

@@ -29,7 +29,7 @@ public class Unit : MonoBehaviour
     float distanceBetween;
 
     Animator anim;
-    NavMeshAgent agent;
+    NavMeshAgent navi;
     NavMeshPath pathToTower;
     LineRenderer line;
 
@@ -41,17 +41,17 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
-        
+        navi = GetComponent<NavMeshAgent>();
+        pathToTower = new NavMeshPath();
         line = GetComponent<LineRenderer>();
-        agent.enabled = false;
-        agent.enabled = true;
+
+        navi.enabled = false;
+        navi.enabled = true;
         
     }
 
     void Update()
     {
-        pathToTower = new NavMeshPath();
         if (targetTower != null && targetWall != null)
         {
             if (destWall != true)
@@ -59,11 +59,10 @@ public class Unit : MonoBehaviour
             else
                 distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
         }
-
-        if (targetWall == null)
-            SearchWall();
-        else if (targetTower == null)
+        if (targetTower == null)
             SearchTower();
+        else if (targetWall == null)
+            SearchWall();
         else if (distanceBetween <= attackRadius)
         {
             if (destTower)
@@ -75,7 +74,6 @@ public class Unit : MonoBehaviour
             MoveTo();
     }
     
-
     private void SearchTower()
     {
 
@@ -97,53 +95,60 @@ public class Unit : MonoBehaviour
 
     private void SearchWall()
     {
-
+        //범위에 탐색된 벽들순서로 하나씩 없다고 가정하고 길찾기 가능한지 확인하고
+        //없앴을때 길찾기가 가능하다면 그벽을 부수는 벽으로 설정
+        //그렇지 아니하면 가장 가까운 벽을 부수는걸로 설정
+        searchWallRadius = searchTowerRadius;
         Collider[] targets = Physics.OverlapSphere(transform.position, searchWallRadius, searchWallMask);
-        if (targets.Length > 0)
-        {
-            Collider pick = targets[0];
-            Wall Wall = pick.GetComponent<Wall>();
+        Collider pick = targets[5];
+        Wall wall = pick.GetComponent<Wall>();
+        if (wall != null)
+            targetWall = wall;
 
-            if (Wall != null)
-                targetWall = Wall;
-        }
-        else
+        navi.CalculatePath(targetWall.transform.position, pathToTower);
+        Debug.Log(pathToTower.status == NavMeshPathStatus.PathComplete);
+        for (int i=0; i<targets.Length; i++)
         {
-            searchWallRadius = Mathf.Clamp(searchWallRadius *= 1.2f, attackRate, 100);
+            navi.CalculatePath(targetWall.transform.position, pathToTower);
+            if (pathToTower.status == NavMeshPathStatus.PathComplete)
+            {
+                Debug.Log(targetWall.transform.position);
+                targetWall = wall;
+                break;
+            }
+            pick = targets[i];
+            wall = pick.GetComponent<Wall>();
         }
         anim.SetBool("isMove", isMove);
     }
-
 
     private void MoveTo()
     {
         isMove = true;
         anim.SetBool("isMove", isMove);
-        agent.SetDestination(targetTower.transform.position);
 
-        agent.CalculatePath(targetTower.transform.position, pathToTower);           // 플레이어에게 통하는 경로의 유효성 검사.
-        Debug.Log(targetTower.transform.position);
-        Debug.Log(pathToTower.status);
-        Debug.Log(agent.CalculatePath(targetTower.transform.position, pathToTower));
+        navi.CalculatePath(targetTower.transform.position, pathToTower);           // 타워에게 가는길이 유효한지 검사
         if (pathToTower.status == NavMeshPathStatus.PathComplete)                  // 유효하다면.
         {
             Debug.Log("유효");
-            agent.SetDestination(targetTower.transform.position);                   // 플레이어에게 이동.
+            navi.SetDestination(targetTower.transform.position);
+            destTower = true;
+            destWall = false;
         }
-        else
-        {
+        else{                                                                      // 유효하지 않다면.
             Debug.Log("유효하지 않음");
-            agent.SetDestination(targetWall.transform.position);                   // 길이 유효하지 않다면 큰 범위를 탐색해 가장 가까운 적에게 이동, 공격한다.
+            navi.SetDestination(targetWall.transform.position);
+            destTower = false;
+            destWall = true;
         }
-
-        if (agent.path.corners.Length > 1 && destWall == false)
+        if (navi.path.corners.Length > 1 && destWall == false)                      //타워검색범위를 벗어나 타워에게 다가갈 때 벽부터 부수게 한다.
         {
-            for (int i = 0; i < agent.path.corners.Length; i++)
+            Debug.Log("444");
+            for (int i = 0; i < navi.path.corners.Length; i++)
             {
-                //미세한 값의 오차를 없애기 위해 0.5를 더한다
-                if (Vector3.Distance(transform.position, agent.path.corners[i]) > searchTowerRadius + 0.5)
+                if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius + 0.5)   //미세한 값의 오차를 없애기 위해 0.5를 더한다
                 {
-                    agent.SetDestination(targetWall.transform.position);
+                    navi.SetDestination(targetWall.transform.position);
                     destTower = false;
                     destWall = true;
                 }
@@ -155,8 +160,8 @@ public class Unit : MonoBehaviour
     private void DrawLine()
     {
         // 라인 렌더러 그리기.        
-        line.positionCount = agent.path.corners.Length;
-        line.SetPositions(agent.path.corners);
+        line.positionCount = navi.path.corners.Length;
+        line.SetPositions(navi.path.corners);
         line.startColor = (targetTower == null) ? Color.green : Color.red;
         line.endColor = (targetTower == null) ? Color.green : Color.red;
     }
@@ -173,9 +178,8 @@ public class Unit : MonoBehaviour
             anim.SetTrigger("onAttack");
             nextAttackTime = Time.time + attackRate;
             destTower = targetTower.OnDamaged(attackPower);
-            if (destTower)
+            if (!destTower)
             {
-                destTower = false;
                 destWall = false;
                 targetTower = null;
                 targetWall = null;
@@ -195,10 +199,9 @@ public class Unit : MonoBehaviour
             anim.SetTrigger("onAttack");
             nextAttackTime = Time.time + attackRate;
             destWall = targetWall.OnDamaged(attackPower);
-            if (destWall)
+            if (!destWall)
             {
                 destTower = false;
-                destWall = false;
                 targetTower = null;
                 targetWall = null;
             }
