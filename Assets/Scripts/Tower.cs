@@ -85,6 +85,7 @@ public class Tower : MonoBehaviour
         if (Hp <= 0)
         {
             OnDestroy();
+            Debug.Log("Destory");
             return false;
         }
         else

@@ -30,7 +30,6 @@ public class Unit : MonoBehaviour
 
     Animator anim;
     NavMeshAgent navi;
-    //NavMeshAgent naviCal;
     NavMeshPath pathToTower;
 
 
@@ -45,30 +44,26 @@ public class Unit : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         navi = GetComponent<NavMeshAgent>();
-        //naviCal = GetComponentInChildren<NavMeshAgent>();
         pathToTower = new NavMeshPath();
         line = GetComponent<LineRenderer>();
 
         navi.enabled = false;
         navi.enabled = true;
-       //naviCal.enabled = false;
-        //naviCal.enabled = true;
+
     }
 
     void Update()
     {
         if (targetTower != null)
         {
-            distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
-            //if (destWall != true)
-            //    distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
-            //else
-            //    distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
+            if (destWall != true)
+                distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
+            else
+                distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
         }
+
         if (targetTower == null)
             SearchTower();
-//        else if (targetWall == null)
-//            SearchWall();
         else if (distanceBetween <= attackRadius)
         {
             if (destTower)
@@ -82,7 +77,10 @@ public class Unit : MonoBehaviour
     
     private void SearchTower()
     {
+        destTower = false;
+        destWall = false;
 
+        float maxSearchRadius = 100f;
         Collider[] targets = Physics.OverlapSphere(transform.position, searchTowerRadius, searchTowerMask);
         if (targets.Length > 0)
         {
@@ -93,37 +91,29 @@ public class Unit : MonoBehaviour
                 targetTower = tower;
         }
         else
-            searchTowerRadius = Mathf.Clamp(searchTowerRadius *= 1.2f, attackRate, 100);
+            searchTowerRadius = Mathf.Clamp(searchTowerRadius *= 1.2f, attackRate, maxSearchRadius);
         anim.SetBool("isMove", isMove);
     }
 
     private void SearchWall()
     {
-        // 1.SetDestination으로 최대한 접근한다.
-        // 2 corners(?)의 카운터가 0이 되었다 (=더이상 이동할 수 없다) 라면 대상까지 갈수있는지 Calculate시켜서 확인한다.
-        // 3-1. 갈수있는 상태면 공격한다.
-        // 3-2. 갈수 없는 상태면 가장 가까운 벽을 부순다. -> 1번
+        float maxSearchRadius = 100f;
+        while (searchWallRadius<= maxSearchRadius)
+        {
+            Collider[] targets = Physics.OverlapSphere(transform.position, searchWallRadius, searchWallMask);
+            if (targets.Length > 0)
+            {
+                Collider pick = targets[0];
+                Wall wall = pick.GetComponent<Wall>();
 
-        searchWallRadius = searchTowerRadius;
-        Collider[] targets = Physics.OverlapSphere(transform.position, searchWallRadius, searchWallMask);
-        Collider pick = targets[0];
-        Wall wall = pick.GetComponent<Wall>();
-        if (wall != null)
-            targetWall = wall;
-
-       
-        //for (int i=0; i<targets.Length; i++)
-        //{
-        //    navi.CalculatePath(targetWall.transform.position, pathToTower);
-        //    if (pathToTower.status == NavMeshPathStatus.PathComplete)
-        //    {
-        //        Debug.Log(targetWall.transform.position);
-        //        targetWall = wall;
-        //        break;
-        //    }
-        //    pick = targets[i];
-        //    wall = pick.GetComponent<Wall>();
-        //}
+                if (wall != null){
+                    targetWall = wall;
+                    break;
+                }
+            }
+            else
+                searchWallRadius = Mathf.Clamp(searchWallRadius += 0.1f, attackRate, maxSearchRadius);
+        }
         anim.SetBool("isMove", isMove);
     }
 
@@ -132,37 +122,46 @@ public class Unit : MonoBehaviour
         isMove = true;
         anim.SetBool("isMove", isMove);
 
-        navi.SetDestination(targetTower.transform.position);
-        Debug.Log(targetTower.transform.position);
+        //처음 도착지를 타워로 지정
+        if (destTower == false && destWall == false)
+        {
+            navi.SetDestination(targetTower.transform.position);
+            destTower = true;
+            destWall = false;
+        }
+        navi.CalculatePath(targetTower.transform.position, pathToTower);    //타워까지 길이 유효한지 검사
+        Debug.Log(targetTower.gameObject);
+        if (pathToTower.status != NavMeshPathStatus.PathComplete && !destWall)     //타워까지 가는 길 못찾았을 때 근처까지 왔을때 벽탐색
+        {
+            if (navi.path.corners.Length == 2) {        //[0]은 오브젝트 위치 [1]은 도착지
+                if (Vector3.Distance(navi.path.corners[1], transform.position) < attackRadius 
+                    && Vector3.Distance(navi.path.corners[1], transform.position)>1f)
+                {
+                    destTower = false;
+                    destWall = true;
+                    SearchWall();
+                    navi.SetDestination(targetWall.transform.position);
+                    Debug.Log("공격");
+                }
+            }
+        }
+  
+        if (navi.path.corners.Length > 1 && destTower != true)                      //타워검색범위를 벗어나 타워에게 다가갈 때 벽부터 부수게 한다.
+        {
+            for (int i = 0; i < navi.path.corners.Length; i++)
+            {
+                if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius + 1f)   //미세한 값의 오차를 없애기 위해 0.5를 더한다
+                {
+                    Debug.Log(Vector3.Distance(transform.position, navi.path.corners[i]));
+                    Debug.Log(searchTowerRadius);
 
-        //naviCal.CalculatePath(targetTower.transform.position, pathToTower);           // 타워에게 가는길이 유효한지 검사
-        //if (pathToTower.status == NavMeshPathStatus.PathComplete)                  // 유효하다면.
-        //{
-        //    Debug.Log("유효");
-        //    navi.SetDestination(targetTower.transform.position);
-        //    destTower = true;
-        //    destWall = false;
-        //}
-        //else{                                                                      // 유효하지 않다면.
-        //    Debug.Log("유효하지 않음");
-        //    navi.SetDestination(targetWall.transform.position);
-        //    destTower = false;
-        //    destWall = true;
-        //}
-
-
-        //if (navi.path.corners.Length > 1 && destWall == false)                      //타워검색범위를 벗어나 타워에게 다가갈 때 벽부터 부수게 한다.
-        //{
-        //    for (int i = 0; i < navi.path.corners.Length; i++)
-        //    {
-        //        if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius + 0.5)   //미세한 값의 오차를 없애기 위해 0.5를 더한다
-        //        {
-        //            navi.SetDestination(targetWall.transform.position);
-        //            destTower = false;
-        //            destWall = true;
-        //        }
-        //    }
-        //}
+                    SearchWall();
+                    navi.SetDestination(targetWall.transform.position);
+                    destTower = false;
+                    destWall = true;
+                }
+            }
+        }
         DrawLine();
     }
 
@@ -179,6 +178,7 @@ public class Unit : MonoBehaviour
     {
         isMove = false;
         anim.SetBool("isMove", isMove);
+
         searchTowerRadius = 5f;
         searchWallRadius = 0f;
 
