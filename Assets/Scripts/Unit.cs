@@ -58,8 +58,13 @@ public class Unit : MonoBehaviour
         {
             if (destWall != true)
                 distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
-            else
+            else if (targetWall != null)
                 distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
+            else if (targetWall == null)
+            {
+                Debug.Log($"{transform.name}:{ targetWall}");
+                destWall = false;
+            }
         }
 
         if (targetTower == null)
@@ -119,18 +124,19 @@ public class Unit : MonoBehaviour
 
     private void MoveTo()
     {
+        //여러가지 길을 찾는방법
+
         isMove = true;
         anim.SetBool("isMove", isMove);
-
         //처음 도착지를 타워로 지정
         if (destTower == false && destWall == false)
         {
             navi.SetDestination(targetTower.transform.position);
+
             destTower = true;
             destWall = false;
         }
         navi.CalculatePath(targetTower.transform.position, pathToTower);    //타워까지 길이 유효한지 검사
-        Debug.Log(targetTower.gameObject);
         if (pathToTower.status != NavMeshPathStatus.PathComplete && !destWall)     //타워까지 가는 길 못찾았을 때 근처까지 왔을때 벽탐색
         {
             if (navi.path.corners.Length == 2) {        //[0]은 오브젝트 위치 [1]은 도착지
@@ -146,15 +152,12 @@ public class Unit : MonoBehaviour
             }
         }
   
-        if (navi.path.corners.Length > 1 && destTower != true)                      //타워검색범위를 벗어나 타워에게 다가갈 때 벽부터 부수게 한다.
+        if (navi.path.corners.Length > 1 && destTower == true)                      //타워검색범위를 벗어나 타워에게 다가갈 때 벽부터 부수게 한다.
         {
             for (int i = 0; i < navi.path.corners.Length; i++)
             {
-                if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius + 1f)   //미세한 값의 오차를 없애기 위해 0.5를 더한다
+                if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius + 1f)   //미세한 값의 오차를 없애기 위해 1을 더한다
                 {
-                    Debug.Log(Vector3.Distance(transform.position, navi.path.corners[i]));
-                    Debug.Log(searchTowerRadius);
-
                     SearchWall();
                     navi.SetDestination(targetWall.transform.position);
                     destTower = false;
