@@ -56,21 +56,21 @@ public class Unit : MonoBehaviour
     {
         if (targetTower != null)
         {
-            if (destWall != true)
-                distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
-            else if (targetWall != null)
-                distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
-            else if (targetWall == null)
+            if (destWall == true)
             {
-                Debug.Log($"{transform.name}:{ targetWall}");
-                destWall = false;
+                if (targetWall != null)
+                    distanceBetween = Vector3.Distance(targetWall.transform.position, transform.position);
             }
+            else
+                distanceBetween = Vector3.Distance(targetTower.transform.position, transform.position);
         }
 
         if (targetTower == null)
             SearchTower();
         else if (distanceBetween <= attackRadius)
         {
+            Debug.Log("1111111");
+
             if (destTower)
                 AttackTower();
             if (destWall)
@@ -124,47 +124,66 @@ public class Unit : MonoBehaviour
 
     private void MoveTo()
     {
-        //여러가지 길을 찾는방법
-
         isMove = true;
         anim.SetBool("isMove", isMove);
+        navi.CalculatePath(targetTower.transform.position, pathToTower);    //타워까지 길이 유효한지 검사
         //처음 도착지를 타워로 지정
         if (destTower == false && destWall == false)
         {
-            navi.SetDestination(targetTower.transform.position);
-
+            navi.SetPath(pathToTower);
+            Debug.Log("2");
             destTower = true;
             destWall = false;
         }
-        navi.CalculatePath(targetTower.transform.position, pathToTower);    //타워까지 길이 유효한지 검사
+        if (destTower && targetTower!=null)
+        {
+            navi.CalculatePath(targetTower.transform.position, pathToTower);    //타워까지 길이 유효한지 검사
+            navi.SetPath(pathToTower);
+        }
+        if (destWall &&targetWall!=null)
+        {
+            navi.CalculatePath(targetWall.transform.position, pathToTower);    //타워까지 길이 유효한지 검사
+            navi.SetPath(pathToTower);
+        }
+
         if (pathToTower.status != NavMeshPathStatus.PathComplete && !destWall)     //타워까지 가는 길 못찾았을 때 근처까지 왔을때 벽탐색
         {
             if (navi.path.corners.Length == 2) {        //[0]은 오브젝트 위치 [1]은 도착지
+
                 if (Vector3.Distance(navi.path.corners[1], transform.position) < attackRadius 
                     && Vector3.Distance(navi.path.corners[1], transform.position)>1f)
                 {
+
                     destTower = false;
                     destWall = true;
                     SearchWall();
-                    navi.SetDestination(targetWall.transform.position);
-                    Debug.Log("공격");
+
+                    navi.CalculatePath(targetWall.transform.position, pathToTower);    //타워까지 길이 유효한지 검사
+                    navi.SetPath(pathToTower);
                 }
             }
         }
   
-        if (navi.path.corners.Length > 1 && destTower == true)                      //타워검색범위를 벗어나 타워에게 다가갈 때 벽부터 부수게 한다.
-        {
-            for (int i = 0; i < navi.path.corners.Length; i++)
-            {
-                if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius + 1f)   //미세한 값의 오차를 없애기 위해 1을 더한다
-                {
-                    SearchWall();
-                    navi.SetDestination(targetWall.transform.position);
-                    destTower = false;
-                    destWall = true;
-                }
-            }
-        }
+        //if (navi.path.corners.Length > 1 && destTower == true)                      //타워검색범위를 벗어나 타워에게 다가갈 때 벽부터 부수게 한다.
+        //{
+        //    for (int i = 0; i < navi.path.corners.Length; i++)
+        //    {
+        //        Debug.Log($"거리차이: {Vector3.Distance(transform.position, navi.path.corners[i])}");
+        //        if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius + 1f)   //미세한 값의 오차를 없애기 위해 1을 더한다
+        //        {
+        //            Debug.Log($"코너길이: {navi.path.corners.Length}");
+        //            Debug.Log($"i: {i}");
+
+        //            Debug.Log($"타워범위: {searchTowerRadius}");
+
+        //            SearchWall();
+        //            navi.CalculatePath(targetWall.transform.position, pathToTower);    //타워까지 길이 유효한지 검사
+        //            navi.SetPath(pathToTower);
+        //            destTower = false;
+        //            destWall = true;
+        //        }
+        //    }
+        //}
         DrawLine();
     }
 
