@@ -143,15 +143,16 @@ public class Unit : MonoBehaviour
             navi.SetPath(path);
 
             //타워탐색 범위보다 더 넓게 길을 돌아 갈 때.
-            for (int i = 0; i < navi.path.corners.Length; i++)
-            {
-                if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius)
-                {
-                    SearchWall();
-                    destWall = true;
-                    destTower = false;
-                }
-            }
+        //    for (int i = 0; i < navi.path.corners.Length; i++)
+        //    {
+        //        if (Vector3.Distance(transform.position, navi.path.corners[i]) > searchTowerRadius)
+        //        {
+        //            SearchWall();
+        //            destWall = true;
+        //            destTower = false;
+        //        }
+        //    }
+        //
         }
 
         //벽이 도착지일 때 벽으로 가라고 길을 잡아준다
