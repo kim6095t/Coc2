@@ -13,12 +13,13 @@ GameObject:
   - component: {fileID: 5524004413523772840}
   - component: {fileID: 3937892034153227426}
   - component: {fileID: 5165178078041330674}
+  - component: {fileID: -3502388839829067550}
   m_Layer: 8
   m_Name: floorTile2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 4
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8525086752683842630
 Transform:
@@ -108,3 +109,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92f3a2c5daf5af4999c961c41832f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3502388839829067550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305935608517253113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
