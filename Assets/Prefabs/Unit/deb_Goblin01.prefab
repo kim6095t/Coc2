@@ -829,13 +829,13 @@ MonoBehaviour:
   searchTowerMask:
     serializedVersion: 2
     m_Bits: 128
-  searchWallRadius: 0
+  searchWallDistance: 3
   searchWallMask:
     serializedVersion: 2
     m_Bits: 512
   attackRadius: 4
   attackRate: 0.5
-  attackPower: 10
+  attackPower: 3
   Hp: 1e+14
 --- !u!95 &1465200985
 Animator:

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MapManager : MonoBehaviour
+public class MapManager : Singletone<MapManager>
 {
 	[SerializeField]
 	private GameObject _mapPrefab;
@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour
 
 	private void Awake()
 	{
+		base.Awake();
 		GenerateNavmesh();
 	}
 
@@ -33,14 +34,8 @@ public class MapManager : MonoBehaviour
 		}
 
 	}
-
-	// Update is called once per frame
-	void Update()
+	public void ReBake()
 	{
-		if (Input.GetKeyDown(KeyCode.P))
-		{
-			Debug.Log("hi");
-			GenerateNavmesh();
-		}
+		GenerateNavmesh();
 	}
 }

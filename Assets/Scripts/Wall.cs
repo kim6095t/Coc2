@@ -21,6 +21,7 @@ public class Wall : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
+        MapManager.Instance.ReBake();
     }
 }

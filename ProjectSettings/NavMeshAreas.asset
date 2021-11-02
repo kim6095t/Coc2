@@ -16,7 +16,7 @@ NavMeshProjectSettings:
   - name: Tile2
     cost: 10
   - name: Wall
-    cost: 100
+    cost: 1
   - name: 
     cost: 1
   - name: 

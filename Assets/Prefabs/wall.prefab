@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7882472653283126948}
   - component: {fileID: 8413659671694429074}
   - component: {fileID: -1673151831326177626}
+  - component: {fileID: 1079643744620967974}
   m_Layer: 9
   m_Name: wall
   m_TagString: Untagged
@@ -109,6 +110,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_OverrideArea: 0
-  m_Area: 0
+  m_Area: 5
   m_IgnoreFromBuild: 1
   m_AffectedAgents: ffffffff
+--- !u!65 &1079643744620967974
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711206978811914794}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

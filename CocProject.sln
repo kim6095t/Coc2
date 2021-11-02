@@ -5,7 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2D.Tilemap.Extras", "Unity.2D.Tilemap.Extras.csproj", "{08164016-D9E5-BA51-9341-E6B169E2AD89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponents", "NavMeshComponents.csproj", "{412CF528-995A-9B54-B3CC-2E011161F214}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2D.Tilemap.Extras.Editor", "Unity.2D.Tilemap.Extras.Editor.csproj", "{B649BC08-94ED-8EED-3BB3-F2A35812407F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponentsEditor", "NavMeshComponentsEditor.csproj", "{6DA54167-9306-0D4F-4332-19C97EDAA620}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2D.Tilemap.Extras.Placeholder.EditorTests", "Unity.2D.Tilemap.Extras.Placeholder.EditorTests.csproj", "{2FD037AB-D1E6-718D-6D38-BA4D08942A4B}"
 EndProject
@@ -23,10 +27,18 @@ Global
 		{08164016-D9E5-BA51-9341-E6B169E2AD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08164016-D9E5-BA51-9341-E6B169E2AD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08164016-D9E5-BA51-9341-E6B169E2AD89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{412CF528-995A-9B54-B3CC-2E011161F214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{412CF528-995A-9B54-B3CC-2E011161F214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{412CF528-995A-9B54-B3CC-2E011161F214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{412CF528-995A-9B54-B3CC-2E011161F214}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B649BC08-94ED-8EED-3BB3-F2A35812407F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B649BC08-94ED-8EED-3BB3-F2A35812407F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B649BC08-94ED-8EED-3BB3-F2A35812407F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B649BC08-94ED-8EED-3BB3-F2A35812407F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DA54167-9306-0D4F-4332-19C97EDAA620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DA54167-9306-0D4F-4332-19C97EDAA620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DA54167-9306-0D4F-4332-19C97EDAA620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DA54167-9306-0D4F-4332-19C97EDAA620}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FD037AB-D1E6-718D-6D38-BA4D08942A4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FD037AB-D1E6-718D-6D38-BA4D08942A4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FD037AB-D1E6-718D-6D38-BA4D08942A4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
