@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 255701222263087551}
   - component: {fileID: 566168566}
   - component: {fileID: 566168564}
+  - component: {fileID: 4329283522246292249}
   m_Layer: 7
   m_Name: tower_defence
   m_TagString: Untagged
@@ -183,6 +184,22 @@ MonoBehaviour:
   attackRate: 0.3
   pivot: {fileID: 5970808299247770572}
   Hp: 50
+--- !u!114 &4329283522246292249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846302017460812186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6547744966335616162
 GameObject:
   m_ObjectHideFlags: 0

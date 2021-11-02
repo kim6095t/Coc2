@@ -7,8 +7,8 @@ public class MapManager : Singletone<MapManager>
 {
 	[SerializeField]
 	private GameObject _mapPrefab;
-
 	private Vector3 _generatePos = new Vector3(50, 0, 50);
+	bool isBake;
 
 	public void Init()
 	{
@@ -32,10 +32,15 @@ public class MapManager : Singletone<MapManager>
 			s.RemoveData();
 			s.BuildNavMesh();
 		}
-
+		isBake = false;
 	}
 	public void ReBake()
 	{
-		GenerateNavmesh();
+		if (!isBake)
+		{
+			isBake = true;
+			GenerateNavmesh();
+		}
+		Debug.Log("hihihih");
 	}
 }
