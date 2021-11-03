@@ -36,11 +36,20 @@ public class MapManager : Singletone<MapManager>
 	}
 	public void ReBake()
 	{
-		if (!isBake)
+		//베이크 중일 때는 베이크 사용불가
+		//게임 종료시에 Instance가 null이 되면서 에러창이 뜬다. 그걸 방지하기 위함.
+		if (!isBake && MapManager.Instance!=null)
 		{
 			isBake = true;
 			GenerateNavmesh();
 		}
-		Debug.Log("hihihih");
 	}
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+			GenerateNavmesh();
+		}
+    }
 }

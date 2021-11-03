@@ -12,7 +12,7 @@ public class Wall : MonoBehaviour
 
         if (Hp <= 0)
         {
-            OnDestroy();
+            Destroy(transform.parent.gameObject);
             return false;
         }
         else
@@ -21,7 +21,7 @@ public class Wall : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(transform.parent.gameObject);
         MapManager.Instance.ReBake();
+        RePathManager.Instance.RePath();
     }
 }

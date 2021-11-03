@@ -84,17 +84,11 @@ public class Tower : MonoBehaviour
 
         if (Hp <= 0)
         {
-            OnDestroy();
-            Debug.Log("Destory");
+            Destroy(gameObject);
             return false;
         }
         else
             return true;
-    }
-
-    private void OnDestroy()
-    {
-        Destroy(gameObject);
     }
 
 #if UNITY_EDITOR

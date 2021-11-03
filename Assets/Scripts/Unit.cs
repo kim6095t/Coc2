@@ -42,6 +42,7 @@ public class Unit : MonoBehaviour
     bool destTower;
     bool destWall;
 
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -53,6 +54,13 @@ public class Unit : MonoBehaviour
         navi.enabled = true;
 
         speed = navi.speed;
+
+        RePathManager.Instance.RegestedPath(MoveTo);
+    }
+
+    private void OnDestroy()
+    {
+        RePathManager.Instance.RemovePath(MoveTo);
     }
 
     void Update()
@@ -76,7 +84,6 @@ public class Unit : MonoBehaviour
         //타워탐색
         if (targetTower == null)
         {
-            
             destWall = false;
             destTower = false;
             SearchTower();
@@ -89,10 +96,15 @@ public class Unit : MonoBehaviour
             if (destWall)
                 AttackWall();
         }
+        //아닐경우 기존의 스피드를 재갱신
+        //공격한다고 멈춰있을수도 있기 때문
         else
-            MoveTo();
+        {
+            navi.speed = speed;
+            DrawLine();
+        }
     }
-    
+
     private void SearchTower()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, searchTowerRadius, searchTowerMask);
@@ -103,7 +115,10 @@ public class Unit : MonoBehaviour
             Collider pick = targets[0];
             Tower tower = pick.GetComponent<Tower>();
             if (tower != null)
+            {
                 targetTower = tower;
+                MoveTo();
+            }
         }
         else
             searchTowerRadius = Mathf.Clamp(searchTowerRadius *= 1.2f, attackRate, maxSearchRadius);
@@ -115,58 +130,70 @@ public class Unit : MonoBehaviour
         Vector3 pivot;
         RaycastHit hit;
 
-        //도착지와 현재위치만 있을 때는 pivot위치를 자기자신의 위치
-        if (navi.path.corners.Length == 2)
+        //가는길 전체 레이를 발사하여 가로막는 벽 탐색
+        for(int i=0; i< navi.path.corners.Length - 1; i++)
         {
-            rot = navi.path.corners[1] - navi.path.corners[0];
-            pivot = transform.position;
-        }
+            rot = navi.path.corners[i+1] - navi.path.corners[i];
+            pivot = navi.path.corners[i];
+            float pathDistance = Vector3.Distance(navi.path.corners[i + 1], navi.path.corners[i]);
 
-        //꺾어서 갈때는 꺾일 지점을 pivot위치로 설정
-        else
-        {
-            rot= navi.path.corners[2] - navi.path.corners[1];
-            pivot = navi.path.corners[1];
-        } 
-        
-        //벽이 검색되었을 떄는 공격타겟을 벽으로 설정
-        if (Physics.Raycast(pivot, rot.normalized, out hit, searchWallDistance, searchWallMask))
-        {
-            Wall wall = hit.collider.gameObject.GetComponent<Wall>();
-            if (wall != null)
+            //벽이 검색되었을 떄는 공격타겟을 벽으로 설정
+            if (Physics.Raycast(pivot, rot.normalized, out hit, pathDistance, searchWallMask))
             {
-                targetWall = wall;
-                destWall = true;
-                destTower = false;
+                Wall wall = hit.collider.gameObject.GetComponent<Wall>();
+                if (wall != null)
+                {
+                    targetWall = wall;
+                    destWall = true;
+                    destTower = false;
+                }
+                break;
             }
+            //검색안될 시 벽이 없는 것으로 판단 
+            else
+            {
+                destTower = true;
+                destWall = false;
+            }
+            Debug.DrawRay(pivot, rot.normalized * pathDistance, Color.red);
         }
-        //검색안될 시 벽이 없는 것으로 판단 
-        else
-        {
-            destWall = false;
-        }
-
-        Debug.DrawRay(pivot, rot.normalized * searchWallDistance, Color.red);
     }
 
+    //타워로 이동하기 위한 함수
     private void MoveTo()
     {
         isMove = true;
         anim.SetBool("isMove", isMove);
         navi.speed = speed;
 
-        Debug.Log($"destTower: {destTower}");
-        Debug.Log($"destWall: {destWall}");
+        destTower = true;
+        destWall = false;
 
-        //초반 탐색
-        if (destTower == false && destWall == false)
+        StartCoroutine(SetDest());
+    }
+
+    //while문을 쓰기 위한 코루틴
+    //극 초반에는 길이 탐색이 되지않아 Length가 0이 나온다
+    //도착지와 목적지가 설정될 때 그 길을 탐색하기 위함
+    IEnumerator SetDest()
+    {
+        while (true)
         {
-            navi.SetDestination(targetTower.transform.position);
-            destTower = true;
-            destWall = false;
-        }
+            //타워가 없을 때를 대비
+            if (targetTower == null)
+                break;
 
-        DrawLine();
+            navi.CalculatePath(targetTower.transform.position,path);
+            navi.SetPath(path);
+
+            if (navi.path.corners.Length > 1)
+            {
+                Debug.Log("Now");
+                break;
+            }
+            yield return null;
+        }
+        yield return null;
     }
 
     // 라인 렌더러 그리기.  
@@ -192,12 +219,7 @@ public class Unit : MonoBehaviour
             nextAttackTime = Time.time + attackRate;
             destTower = targetTower.OnDamaged(attackPower);
             if (!destTower)
-            {
-                destWall = false;
-                targetTower = null;
-                targetWall = null;
                 navi.speed = speed;
-            }
         }
 
     }
@@ -215,12 +237,7 @@ public class Unit : MonoBehaviour
             nextAttackTime = Time.time + attackRate;
             destWall = targetWall.OnDamaged(attackPower);
             if (!destWall)
-            {
-                destTower = false;
-                targetTower = null;
-                targetWall = null;
                 navi.speed = speed;
-            }
         }
     }
 
@@ -234,7 +251,6 @@ public class Unit : MonoBehaviour
 
     private void OnDead()
     {
-        anim.SetTrigger("onDie");
         Destroy(gameObject);
     }
 
