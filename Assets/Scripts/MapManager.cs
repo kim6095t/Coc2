@@ -17,10 +17,11 @@ public class MapManager : Singletone<MapManager>
 	private void Awake()
 	{
 		base.Awake();
-		GenerateNavmesh();
+		StartCoroutine(GenerateNavmesh());
 	}
+	
 
-	private void GenerateNavmesh()
+	IEnumerator GenerateNavmesh()
 	{
 		GameObject obj = Instantiate(_mapPrefab, _generatePos, Quaternion.identity, transform);
 		_generatePos += new Vector3(50, 0, 50);
@@ -31,8 +32,10 @@ public class MapManager : Singletone<MapManager>
 		{
 			s.RemoveData();
 			s.BuildNavMesh();
+			yield return null;
 		}
 		isBake = false;
+		yield return null;
 	}
 	public void ReBake()
 	{
@@ -41,15 +44,7 @@ public class MapManager : Singletone<MapManager>
 		if (!isBake && MapManager.Instance!=null)
 		{
 			isBake = true;
-			GenerateNavmesh();
+			StartCoroutine(GenerateNavmesh());
 		}
 	}
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-			GenerateNavmesh();
-		}
-    }
 }
