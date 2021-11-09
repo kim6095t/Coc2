@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     public static string KEY_ATKRANGE = "AttackRadius";
     public static string KEY_MOVESPEED = "MoveSpeed";
     public static string KEY_PRICE = "Price";
+    public static string KEY_HP = "Hp";
 
     public enum Unit_TYPE
     {
@@ -28,6 +29,10 @@ public class Unit : MonoBehaviour
         Count,
     }
 
+    [Header("Info")]
+    [SerializeField] Unit_TYPE type;
+    [SerializeField] Sprite sprite;
+
     [Header("Search Tower")]
     [SerializeField] float searchTowerRadius;
     [SerializeField] LayerMask searchTowerMask;
@@ -36,23 +41,25 @@ public class Unit : MonoBehaviour
     [SerializeField] float searchWallDistance;
     [SerializeField] LayerMask searchWallMask;
 
-    [Header("Attack")]
-    [SerializeField] float attackRadius;
-    [SerializeField] float attackRate;
-    [SerializeField] float attackPower;
 
-    [Header("etc")]
-    [SerializeField] float Hp;
+    public Unit_TYPE Type => type;
+
+    //엑셀에서 가져올 값들
+    protected float attackPower;
+    protected float attackRate;
+    protected float attackRadius;
+    protected int moveSpeed;
+    protected int price;
+    protected float hp;
 
 
-
-
-    private Tower targetTower = null;
-    private Wall targetWall = null;
-    private float nextAttackTime = 0.0f;
+    //전역 변수로 사용될 리스트
+    Tower targetTower = null;
+    Wall targetWall = null;
+    float nextAttackTime;
     float maxSearchRadius;
     float distanceBetween;
-    float speed;            //초기값 저장
+    float speed;            
 
     Animator anim;
     NavMeshAgent navi;
@@ -79,12 +86,17 @@ public class Unit : MonoBehaviour
         maxSearchRadius = 100f;
         distanceBetween = maxSearchRadius;
         speed = navi.speed;
+
+        Debug.Log(attackPower);
+        Debug.Log(attackRate);
+
     }
 
     private void OnDestroy()
     {
         RePathManager.Instance.RemovePath(DlRePath);
     }
+
     void Update()
     {
         //벽이나 타워간의 거리 측정
@@ -138,6 +150,18 @@ public class Unit : MonoBehaviour
             MoveTo();
         }
     }
+
+    public void Setup(UnitData data)
+    {
+        attackPower = float.Parse(data.GetData(KEY_POWER));
+        attackRate = float.Parse(data.GetData(KEY_ATKSPD));
+        attackRadius = float.Parse(data.GetData(KEY_ATKRANGE));
+        
+        moveSpeed = int.Parse(data.GetData(KEY_MOVESPEED));
+        price = int.Parse(data.GetData(KEY_PRICE));
+        //hp = int.Parse(data.GetData(KEY_HP));
+    }
+
 
     private void SearchTower()
     {
@@ -282,9 +306,9 @@ public class Unit : MonoBehaviour
 
     public void OnDamaged(float damaged)
     {
-        Hp -= damaged;
+        hp -= damaged;
 
-        if (Hp <= 0)
+        if (hp <= 0)
             OnDead();
     }
 

@@ -8,6 +8,11 @@ public class SetTile : MonoBehaviour
     public bool IsOnObject => onObject != null;
 
 
+    private void Start()
+    {
+        FindOnObject();
+    }
+
     public void SetUnit(Unit newUnit)
     {
         newUnit.transform.position = transform.position;   // 위치 값 갱신.
@@ -20,6 +25,7 @@ public class SetTile : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             GameObject target = hits[i].collider.gameObject;
+
             if (target.CompareTag(MapManager.Instance.TAG_PLAYABLE))
             {
                 onObject = target;

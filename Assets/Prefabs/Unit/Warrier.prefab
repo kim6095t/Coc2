@@ -1459,6 +1459,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5699b1782638a47a56f4ab2df7b706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 2
+  sprite: {fileID: 0}
   searchTowerRadius: 5
   searchTowerMask:
     serializedVersion: 2
@@ -1467,7 +1469,3 @@ MonoBehaviour:
   searchWallMask:
     serializedVersion: 2
     m_Bits: 512
-  attackRadius: 4
-  attackRate: 0.5
-  attackPower: 1
-  Hp: 1e+14
