@@ -90,6 +90,9 @@ public class Tower : MonoBehaviour
         else
             return true;
     }
+    private void OnDestroy()
+    {
+    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

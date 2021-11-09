@@ -1,0 +1,5 @@
+Name,Power,AttackRate,AttackRadius,MoveSpeed,Price
+Goblin,3,2,2,1,10
+Archer,2,2,5,1,20
+Warrier,5,2,3,1,30
+Giant,3,2,2,1,40
