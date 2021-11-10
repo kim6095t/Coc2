@@ -1,5 +1,5 @@
-Name,Power,AttackRate,AttackRadius,MoveSpeed,Price,Hp
-Goblin,3,2,2,1,10,10
-Archer,2,2,5,1,20,10
-Warrier,5,2,3,1,30,10
-Giant,3,2,2,1,40,10
+Name,Type,Power,AttackRate,AttackRadius,MoveSpeed,Price,Hp,Null
+Goblin,Goblin,3,2,2,1,10,10,Null
+Archer,Archer,2,2,5,1,20,10,Null
+Warrier,Warrier,5,2,3,1,30,10,Null
+Giant,Giant,3,2,2,1,40,10,Null

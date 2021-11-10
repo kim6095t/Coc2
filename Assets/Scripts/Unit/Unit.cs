@@ -10,6 +10,7 @@ using UnityEngine.AI;
 public class Unit : MonoBehaviour
 {
     public static string KEY_NAME = "Name";
+    public static string KEY_TYPE = "Type";
     public static string KEY_POWER = "Power";
     public static string KEY_ATKSPD = "AttackRate";
     public static string KEY_ATKRANGE = "AttackRadius";

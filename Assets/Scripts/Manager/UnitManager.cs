@@ -117,8 +117,14 @@ public class UnitManager : Singletone<UnitManager>
         setTile.SetUnit(newUnit);
     }
 
-    public void OnSelectedTower(Unit.Unit_TYPE type)
+    public UnitData GetData(Unit_TYPE type)
     {
+        return unitDatas[type];
+    }
+
+    public void OnSelectedUnit(Unit.Unit_TYPE type)
+    {
+        Debug.Log("º±≈√µ ");
         selectedType = type;
     }
 }

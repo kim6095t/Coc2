@@ -58,6 +58,8 @@
      <Compile Include="Assets\AssetStore\Unit\Archer\Script\buttongoblinfree.cs" />
      <Compile Include="Assets\Scripts\Unit\Unit.cs" />
      <Compile Include="Assets\Scripts\Manager\UnitManager.cs" />
+     <Compile Include="Assets\Scripts\UI\UnitButtonManager.cs" />
+     <Compile Include="Assets\Scripts\UI\UnitButton.cs" />
      <None Include="Assets\AssetStore\Unit\Archer\Product Licenses.txt" />
      <None Include="Assets\AssetStore\Tower\Shaders\Double Side.shader" />
  <Reference Include="UnityEngine">
