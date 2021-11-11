@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static Unit;     // Unit 클래스의 영역을 포함하겠다.
 
 
@@ -75,20 +76,22 @@ public class UnitManager : Singletone<UnitManager>
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            MousePointToRay();
-            nextCallTime = Time.time + callRate;
-        }
-        if (Input.GetMouseButton(0) && nextCallTime <= Time.time)
-        {
-            MousePointToRay();
-            callRate = Mathf.Clamp(callRate /= 2, 0.01f, originCallRate);
-            nextCallTime = Time.time + callRate;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            callRate = originCallRate;
+        if (!EventSystem.current.IsPointerOverGameObject()) {
+            if (Input.GetMouseButtonDown(0))
+            {
+                MousePointToRay();
+                nextCallTime = Time.time + callRate;
+            }
+            if (Input.GetMouseButton(0) && nextCallTime <= Time.time)
+            {
+                MousePointToRay();
+                callRate = Mathf.Clamp(callRate /= 2, 0.01f, originCallRate);
+                nextCallTime = Time.time + callRate;
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                callRate = originCallRate;
+            }
         }
     }
 
@@ -97,6 +100,7 @@ public class UnitManager : Singletone<UnitManager>
         // 마우스의 현재 위치를 Ray로 변환.
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+
 
         if (Physics.Raycast(ray, out hit, float.MaxValue, tileMask))
         {
@@ -111,7 +115,6 @@ public class UnitManager : Singletone<UnitManager>
         if (setTile == null || setTile.IsOnObject ||selectedType==Unit_TYPE.None)
             return;
 
-        Debug.Log(selectedType);
         Unit newUnit = Instantiate(unitPrefabs[(int)selectedType]);
         newUnit.Setup(unitDatas[newUnit.Type]);
 
@@ -123,9 +126,14 @@ public class UnitManager : Singletone<UnitManager>
         return unitDatas[type];
     }
 
+
+    //해야할 것: 유닛 클릭 버튼을 눌렀을 때 유닛은 선택이 되지 않게
+    //방법1. bool변수를 이용한다.
+    //OnSelectedUnit
+    //선택한 영역이 검은 박스 영역일때는 유닛생성 불가능
+
     public void OnSelectedUnit(Unit.Unit_TYPE type)
     {
-        Debug.Log(type);
         selectedType = type;
     }
 }

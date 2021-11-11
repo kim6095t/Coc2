@@ -14,9 +14,9 @@ public class UnitButton : MonoBehaviour
     {
         // 데이터를 받아와 열거형으로 파싱.
         type = (Unit.Unit_TYPE)System.Enum.Parse(typeof(Unit.Unit_TYPE), unitData.GetData(Unit.KEY_TYPE));
-        unitImage.sprite = Resources.Load<Sprite>("UnitSprite/Giant");
 
-        // towerImage.sprite = tower.towerSprite;
+        unitImage.sprite = Resources.Load<Sprite>($"UnitSprite/{type}");
+
         priceText.text = string.Format("{0:#,##0}", unitData.GetData(Unit.KEY_PRICE));
 
         // 버튼에 이벤트 등록.

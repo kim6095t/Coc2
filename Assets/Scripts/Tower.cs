@@ -90,8 +90,10 @@ public class Tower : MonoBehaviour
         else
             return true;
     }
+    
     private void OnDestroy()
     {
+        StageClearPersent.Instance.OnDestroyTarget();
     }
 
 #if UNITY_EDITOR
