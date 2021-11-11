@@ -39,7 +39,7 @@ public class UnitManager : Singletone<UnitManager>
     [SerializeField] LayerMask tileMask;
 
     Dictionary<Unit_TYPE, UnitData> unitDatas;           // 가공된 타워 데이터.
-    Unit_TYPE selectedType = Unit_TYPE.Goblin;             // 현재 선택한 타워의 타입.
+    Unit_TYPE selectedType = Unit_TYPE.None;             // 현재 선택한 타워의 타입.
 
 
     private void Awake()
@@ -108,9 +108,10 @@ public class UnitManager : Singletone<UnitManager>
     private void CreateUnit(SetTile setTile )
     {
         // 선택한 타일이 없거나 타일에 이미 설치가 되어있는 경우.
-        if (setTile == null || setTile.IsOnObject)
+        if (setTile == null || setTile.IsOnObject ||selectedType==Unit_TYPE.None)
             return;
 
+        Debug.Log(selectedType);
         Unit newUnit = Instantiate(unitPrefabs[(int)selectedType]);
         newUnit.Setup(unitDatas[newUnit.Type]);
 
@@ -124,7 +125,7 @@ public class UnitManager : Singletone<UnitManager>
 
     public void OnSelectedUnit(Unit.Unit_TYPE type)
     {
-        Debug.Log("선택됨");
+        Debug.Log(type);
         selectedType = type;
     }
 }

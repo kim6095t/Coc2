@@ -87,10 +87,6 @@ public class Unit : MonoBehaviour
         maxSearchRadius = 100f;
         distanceBetween = maxSearchRadius;
         speed = navi.speed;
-
-        Debug.Log(attackPower);
-        Debug.Log(attackRate);
-
     }
 
     private void OnDestroy()
