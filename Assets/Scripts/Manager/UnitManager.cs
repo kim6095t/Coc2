@@ -111,14 +111,21 @@ public class UnitManager : Singletone<UnitManager>
 
     private void CreateUnit(SetTile setTile )
     {
-        // 선택한 타일이 없거나 타일에 이미 설치가 되어있는 경우.
-        if (setTile == null || setTile.IsOnObject ||selectedType==Unit_TYPE.None)
+        // 유닛을 선택하지 않고 소환할 시 화면에 에러메세지 출력
+        if (selectedType == Unit_TYPE.None)
+        {
+            TextCollect.Instance.OnNotSelectedUnit();
+            return;
+        }
+
+        if (setTile == null || setTile.IsOnObject)
             return;
 
         Unit newUnit = Instantiate(unitPrefabs[(int)selectedType]);
         newUnit.Setup(unitDatas[newUnit.Type]);
 
         setTile.SetUnit(newUnit);
+        TextCollect.Instance.OnFalseAllText();
     }
 
     public UnitData GetData(Unit_TYPE type)

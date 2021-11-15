@@ -7,7 +7,6 @@ public class UnitButtonManager : MonoBehaviour
 {
     [SerializeField] UnitButton buttonPrefab;
     [SerializeField] Transform emptySlotPrefab;
-    [SerializeField] 
 
     private void Start()
     {

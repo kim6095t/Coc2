@@ -20,8 +20,21 @@ public class Tower : MonoBehaviour
     [SerializeField] Transform pivot;
     [SerializeField] float Hp;
 
+
+    private float gold;
+    private float jelly;
+  
     private Unit target = null;
     private float nextAttackTime = 0.0f;
+
+    public void Start()
+    {
+        gold = 100f;
+        jelly = 100f;
+
+        ResourceDateManager.Instance.RegestedResource(DlAddResource);
+    }
+
 
     void Update()
     {
@@ -94,7 +107,27 @@ public class Tower : MonoBehaviour
     private void OnDestroy()
     {
         StageClearPersent.Instance.OnDestroyTarget();
+
+        ResourceDateManager.Instance.getGold += gold;
+        ResourceDateManager.Instance.getJelly += jelly;
+
+        ResourceDateManager.Instance.myGold += gold;
+        ResourceDateManager.Instance.myJelly += jelly;
+        ResourceDateManager.Instance.RemoveResource(DlRemoveResource);
     }
+
+    public void DlAddResource()
+    {
+        ResourceDateManager.Instance.enemyGold += gold;
+        ResourceDateManager.Instance.enemyJelly += jelly;
+    }
+
+    public void DlRemoveResource()
+    {
+        ResourceDateManager.Instance.enemyGold -= gold;
+        ResourceDateManager.Instance.enemyJelly -= jelly;
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
