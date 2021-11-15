@@ -7,12 +7,16 @@ public class StageClearPersent : Singletone<StageClearPersent>
 {
     [SerializeField] Text persent;
     [SerializeField] Image[] stars;
+    [SerializeField] SubClear subclear;
 
     float nowTargetNum;
     float allTargetNum;
     float nowClearPersent;
     bool[] activeStar;
 
+    public string Persent => persent.text;
+    public bool[] ActiveStar => activeStar;
+    public int NowClearPersent => (int)nowClearPersent;
 
     void Start()
     {
@@ -35,22 +39,23 @@ public class StageClearPersent : Singletone<StageClearPersent>
     private void RenewPersent()
     {
         nowClearPersent = ((allTargetNum - nowTargetNum) / allTargetNum) * 100;
-        persent.text = $"{(int)(((allTargetNum-nowTargetNum)/allTargetNum) * 100)}%";
+        persent.text = $"{(int)nowClearPersent}%";
+
 
         if (nowClearPersent > 33 && activeStar[0]==false)
         {
+            subclear.OnActiveStar();
             activeStar[0] = true;
-            SubClear.Instance.OnActiveStar();
         }
-        if (nowClearPersent > 66 && activeStar[1] == false)
+        else if (!subclear.isActiveStar && activeStar[1] == false && nowClearPersent > 66 )
         {
+            subclear.OnActiveStar();
             activeStar[1] = true;
-            SubClear.Instance.OnActiveStar();
         }
-        if (nowClearPersent >= 100 && activeStar[2] == false)
+        else if (!subclear.isActiveStar && activeStar[2] == false && nowClearPersent >= 100 )
         {
+            subclear.OnActiveStar();
             activeStar[2] = true;
-            SubClear.Instance.OnActiveStar();
         }
     }
 

@@ -10,10 +10,13 @@ public class MyResource : MonoBehaviour
     public Image goldBar;
     public Image jellyBar;
 
+    private void Start()
+    {
+        OnUpdateResource();
+    }
+
     public void OnUpdateResource()
     {
-        Debug.Log("이거 실행");
-        Debug.Log(ResourceDateManager.Instance.myGold);
         goldText.text = $"{ ResourceDateManager.Instance.myGold}";
         jellyText.text = $"{ ResourceDateManager.Instance.myJelly}";
 

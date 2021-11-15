@@ -10,17 +10,14 @@ public class ResourceDateManager : Singletone<ResourceDateManager>
     public delegate void ResourceDataEvent();         // 델리게이트 정의.
     event ResourceDataEvent DlResourceData;           // 이벤트 함수 선언.
 
-    public float enemyGold;
-    public float enemyJelly;
-
-    public float maxGold;
-    public float maxJelly;
-
-    public float myGold;
-    public float myJelly;
-
-    public float getGold;
-    public float getJelly;
+    [HideInInspector] public float enemyGold;
+    [HideInInspector] public float enemyJelly;
+    [HideInInspector] public float maxGold;
+    [HideInInspector] public float maxJelly;
+    [HideInInspector] public float myGold;
+    [HideInInspector] public float myJelly;
+    [HideInInspector] public float getGold;
+    [HideInInspector] public float getJelly;
 
 
     private bool isSaved;                 // 저장 여부.
@@ -30,8 +27,10 @@ public class ResourceDateManager : Singletone<ResourceDateManager>
     private const string JELLY_NUM = "jelly";
     private const string DATA = "Data";
 
-    public void Start()
+    public void Awake()
     {
+        base.Awake();
+
         DataManager.OnSave += OnSave;
         DataManager.OnLoad += OnLoad;
         DataManager.OnInit += OnInit;

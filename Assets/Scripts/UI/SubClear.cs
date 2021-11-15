@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SubClear : Singletone<SubClear>
+public class SubClear : MonoBehaviour
 {
     [SerializeField] RectTransform[] rectTransform;
     ChangeSizeStar[] changeSizeStar;
@@ -11,6 +11,8 @@ public class SubClear : Singletone<SubClear>
     RectTransform rect;
     ChangeSizeStar chanSizeStar;
 
+    bool IsActiveStar;
+    public bool isActiveStar => IsActiveStar;
 
     void Start()
     {
@@ -24,6 +26,8 @@ public class SubClear : Singletone<SubClear>
 
     public void OnActiveStar()
     {
+        IsActiveStar = true;
+
         for (int i = 0; i < rectTransform.Length; i++)
         {
             if (StageClearPersent.Instance.OnIsActiveStar(i) == false)
@@ -36,6 +40,7 @@ public class SubClear : Singletone<SubClear>
                 LabelSize = chanSizeStar.Label * (int)(StageClearPersent.Instance.onStarSize().x / chanSizeStar.Star.x);
 
                 StartCoroutine(MoveAndChangeSize());
+                IsActiveStar = false;
                 break;
             }
         }
