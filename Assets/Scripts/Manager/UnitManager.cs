@@ -36,11 +36,15 @@ public class UnitManager : Singletone<UnitManager>
     [SerializeField] UnitButtonManager unitButtonManager;
     [SerializeField] LayerMask tileMask;
 
-    Dictionary<Unit_TYPE, UnitData> unitDatas;           // 가공된 타워 데이터.
+    [SerializeField] ResultMenu resultMenu;
+    [SerializeField] EndGame endGame;
+
+    [HideInInspector] public int maxUnitCount;
+
+    private Dictionary<Unit_TYPE, UnitData> unitDatas;   // 가공된 타워 데이터.
     public Dictionary<Unit_TYPE, int> unitCount;         // 유닛의 수.
 
     Unit_TYPE selectedType = Unit_TYPE.None;             // 현재 선택한 타워의 타입.
-
 
     private void Awake()
     {
@@ -56,12 +60,9 @@ public class UnitManager : Singletone<UnitManager>
             UnitData newData = new UnitData(csvDatas[i]);
             Unit_TYPE type = (Unit_TYPE)System.Enum.Parse(typeof(Unit_TYPE), newData.GetData(KEY_NAME));
             unitDatas.Add(type, newData);
-            unitCount.Add(type, 100);
-        }
+            unitCount.Add(type, 0);
 
-        foreach(Unit_TYPE key in unitDatas.Keys)
-        {
-            Debug.Log(unitDatas[key]);
+            maxUnitCount += unitCount[type];
         }
     }
 
@@ -95,6 +96,13 @@ public class UnitManager : Singletone<UnitManager>
                 callRate = originCallRate;
             }
         }
+
+        if (maxUnitCount <= 0)
+        {
+            resultMenu.SwitchResultMenu(true);
+            endGame.GameResult();
+            Debug.Log("더이상 소환 가능한 유닛 없음");
+        }
     }
 
     private void MousePointToRay()
@@ -102,7 +110,6 @@ public class UnitManager : Singletone<UnitManager>
         // 마우스의 현재 위치를 Ray로 변환.
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
 
         if (Physics.Raycast(ray, out hit, float.MaxValue, tileMask))
         {
@@ -123,6 +130,10 @@ public class UnitManager : Singletone<UnitManager>
         if (setTile == null || setTile.IsOnObject)
             return;
 
+        //소환가능한 유닛을 모두소환 했을때
+        if (unitCount[selectedType]<=0)
+            return;
+
         Unit newUnit = Instantiate(unitPrefabs[(int)selectedType]);
         newUnit.Setup(unitDatas[newUnit.Type]);
 
@@ -137,12 +148,6 @@ public class UnitManager : Singletone<UnitManager>
     {
         return unitDatas[type];
     }
-
-
-    //해야할 것: 유닛 클릭 버튼을 눌렀을 때 유닛은 선택이 되지 않게
-    //방법1. bool변수를 이용한다.
-    //OnSelectedUnit
-    //선택한 영역이 검은 박스 영역일때는 유닛생성 불가능
 
     public void OnSelectedUnit(Unit.Unit_TYPE type)
     {

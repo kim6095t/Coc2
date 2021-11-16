@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181472}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,8 @@ GameObject:
   - component: {fileID: 6433058008101152660}
   - component: {fileID: -709743244322524414}
   - component: {fileID: -2651556155317188911}
-  m_Layer: 0
+  - component: {fileID: 8356156370294378712}
+  m_Layer: 6
   m_Name: Giant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,11 +125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   sprite: {fileID: 0}
-  searchTowerRadius: 5
   searchTowerMask:
     serializedVersion: 2
     m_Bits: 128
-  searchWallDistance: 3
   searchWallMask:
     serializedVersion: 2
     m_Bits: 512
@@ -230,6 +229,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!136 &8356156370294378712
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426078012539078018}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0.5}
 --- !u!1 &1426078012539078020
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181476}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181478}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181480}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181482}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181484}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftHandIndex2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +407,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181486}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftHandIndex1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +438,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181488}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftHandIndex4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181490}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftHandIndex3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +499,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181492}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +530,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181494}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,7 +561,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,7 +592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181498}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftToe_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,7 +622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181500}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181502}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:LeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -671,7 +684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Skeleton_DimplesRig:HeadTop_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181538}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Skeleton_DimplesRig:Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -733,7 +746,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1426078012539181540}
   - component: {fileID: 1426078012544354432}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dimples (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +856,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181440}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +887,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181442}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -905,7 +918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,7 +980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181448}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightHandIndex2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -998,7 +1011,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181450}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightHandIndex1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1029,7 +1042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181452}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightHandIndex4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1059,7 +1072,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181454}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightHandIndex3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1090,7 +1103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181456}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1121,7 +1134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181458}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1152,7 +1165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181460}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1183,7 +1196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181462}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightToe_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1213,7 +1226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181464}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1244,7 +1257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:RightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1275,7 +1288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181468}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1308,7 +1321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1426078012539181470}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DimplesRig:Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

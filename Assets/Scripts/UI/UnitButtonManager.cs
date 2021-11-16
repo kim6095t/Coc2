@@ -30,8 +30,10 @@ public class UnitButtonManager : MonoBehaviour
             Instantiate(emptySlotPrefab, transform);
         }
     }
+
+    //유닛생성되면 UI에서도 숫자차감
     public void OnCreateUnit(Unit_TYPE type)
     {
-        unitButtons[(int)type].priceText.text = "10";
+        unitButtons[(int)type].OnCountUnit(unitButtons[(int)type]);
     }
 }

@@ -46,6 +46,7 @@ public class Tower : MonoBehaviour
 
     private void SearchEnemy()
     {
+        Debug.Log("hihi");
         Collider[] targets = Physics.OverlapSphere(transform.position, searchRadius, searchMask);
         if (targets.Length > 0)
         {

@@ -789,6 +789,7 @@ GameObject:
   - component: {fileID: 1465200985}
   - component: {fileID: 4467189568148736564}
   - component: {fileID: 20271819}
+  - component: {fileID: 6422277472650598909}
   m_Layer: 6
   m_Name: Goblin
   m_TagString: Untagged
@@ -827,11 +828,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   sprite: {fileID: 0}
-  searchTowerRadius: 5
   searchTowerMask:
     serializedVersion: 2
     m_Bits: 128
-  searchWallDistance: 3
   searchWallMask:
     serializedVersion: 2
     m_Bits: 512
@@ -974,6 +973,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!136 &6422277472650598909
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314104455382831442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0.5}
 --- !u!1 &5314104455382831444
 GameObject:
   m_ObjectHideFlags: 0

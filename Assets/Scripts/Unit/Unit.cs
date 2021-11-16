@@ -312,6 +312,7 @@ public class Unit : MonoBehaviour
     private void OnDead()
     {
         Destroy(gameObject);
+        UnitManager.Instance.maxUnitCount--;
     }
 
 #if UNITY_EDITOR

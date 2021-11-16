@@ -10,7 +10,7 @@ public class EndGame : MonoBehaviour
     [SerializeField] Text score;
     [SerializeField] Image[] stars;
 
-    public void OnClickEndButton()
+    public void GameResult()
     {
         int activeStar = 0;
         for (int i = 0; i < stars.Length; i++) {
