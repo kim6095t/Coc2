@@ -8,17 +8,14 @@ using static Unit;     // Unit 클래스의 영역을 포함하겠다.
 public class UnitData
 {
     private Dictionary<string, string> data;
-
     public UnitData(Dictionary<string, string> data)
     {
         this.data = data;
     }
-
     public string GetData(string key)
     {
         return data[key];
     }
-
     public override string ToString()
     {
         string text = string.Empty;
@@ -28,7 +25,6 @@ public class UnitData
             text += string.Format("key:{0}, value:{1}", key, data[key]);
             text += "\n";
         }
-
         return text;
     }
 }
@@ -37,9 +33,12 @@ public class UnitManager : Singletone<UnitManager>
 {
     [SerializeField] TextAsset data;
     [SerializeField] Unit[] unitPrefabs;
+    [SerializeField] UnitButtonManager unitButtonManager;
     [SerializeField] LayerMask tileMask;
 
     Dictionary<Unit_TYPE, UnitData> unitDatas;           // 가공된 타워 데이터.
+    public Dictionary<Unit_TYPE, int> unitCount;         // 유닛의 수.
+
     Unit_TYPE selectedType = Unit_TYPE.None;             // 현재 선택한 타워의 타입.
 
 
@@ -49,12 +48,15 @@ public class UnitManager : Singletone<UnitManager>
 
         // CSV데이터를 우리가 원하는 데이터로 가공.
         unitDatas = new Dictionary<Unit_TYPE, UnitData>();
+        unitCount= new Dictionary<Unit_TYPE, int>();
+
         Dictionary<string, string>[] csvDatas = CSVReader.ReadCSV(data);
         for (int i = 0; i < csvDatas.Length; i++)
         {
             UnitData newData = new UnitData(csvDatas[i]);
             Unit_TYPE type = (Unit_TYPE)System.Enum.Parse(typeof(Unit_TYPE), newData.GetData(KEY_NAME));
             unitDatas.Add(type, newData);
+            unitCount.Add(type, 100);
         }
 
         foreach(Unit_TYPE key in unitDatas.Keys)
@@ -63,7 +65,7 @@ public class UnitManager : Singletone<UnitManager>
         }
     }
 
-
+  
     //유닛 소환 시간
     float callRate = 1;
     float originCallRate;
@@ -125,6 +127,9 @@ public class UnitManager : Singletone<UnitManager>
         newUnit.Setup(unitDatas[newUnit.Type]);
 
         setTile.SetUnit(newUnit);
+        unitCount[newUnit.Type] -= 1;
+        unitButtonManager.OnCreateUnit(newUnit.Type);
+
         TextCollect.Instance.OnFalseAllText();
     }
 

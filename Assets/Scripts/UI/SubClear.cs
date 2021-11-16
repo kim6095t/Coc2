@@ -49,8 +49,6 @@ public class SubClear : MonoBehaviour
 
     IEnumerator MoveAndChangeSize()
     {
-        Debug.Log(StageClearPersent.Instance.onStarSize());
-
         yield return new WaitForSeconds(1f);
         while (Vector3.Distance(rect.position, StageClearPersent.Instance.onStarPosition()) > 5f)
         {

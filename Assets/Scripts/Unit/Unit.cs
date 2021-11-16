@@ -14,6 +14,8 @@ public class Unit : MonoBehaviour
     public static string KEY_POWER = "Power";
     public static string KEY_ATKSPD = "AttackRate";
     public static string KEY_ATKRANGE = "AttackRadius";
+    public static string KEY_SERCHTOWERRANGE = "SearchTowerRadius";
+    public static string KEY_SERCHWALLDISTAN = "SearchWallDistance";
     public static string KEY_MOVESPEED = "MoveSpeed";
     public static string KEY_PRICE = "Price";
     public static string KEY_HP = "Hp";
@@ -30,16 +32,9 @@ public class Unit : MonoBehaviour
         Count,
     }
 
-    [Header("Info")]
     [SerializeField] Unit_TYPE type;
     [SerializeField] Sprite sprite;
-
-    [Header("Search Tower")]
-    [SerializeField] float searchTowerRadius;
     [SerializeField] LayerMask searchTowerMask;
-
-    [Header("Search Wall")]
-    [SerializeField] float searchWallDistance;
     [SerializeField] LayerMask searchWallMask;
 
 
@@ -49,6 +44,8 @@ public class Unit : MonoBehaviour
     protected float attackPower;
     protected float attackRate;
     protected float attackRadius;
+    protected float searchTowerRadius;
+    protected float searchWallDistance;
     protected int moveSpeed;
     protected int price;
     protected float hp;
@@ -153,7 +150,10 @@ public class Unit : MonoBehaviour
         attackPower = float.Parse(data.GetData(KEY_POWER));
         attackRate = float.Parse(data.GetData(KEY_ATKSPD));
         attackRadius = float.Parse(data.GetData(KEY_ATKRANGE));
-        
+
+        searchTowerRadius=float.Parse(data.GetData(KEY_SERCHTOWERRANGE));
+        searchWallDistance=float.Parse(data.GetData(KEY_SERCHWALLDISTAN));
+
         moveSpeed = int.Parse(data.GetData(KEY_MOVESPEED));
         price = int.Parse(data.GetData(KEY_PRICE));
         //hp = int.Parse(data.GetData(KEY_HP));
