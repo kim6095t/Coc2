@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class MapManager : Singletone<MapManager>
 {
 	public string TAG_PLAYABLE = "Playable";
+	string sceneName;
 
 	[SerializeField]
 	private GameObject _mapPrefab;
 	private Vector3 _generatePos = new Vector3(50, 0, 50);
-	bool isBake;
 	NavMeshSurface[] surfaces;
 
 
@@ -23,6 +24,8 @@ public class MapManager : Singletone<MapManager>
 		surfaces = gameObject.GetComponentsInChildren<NavMeshSurface>();
 
 		StartCoroutine(GenerateNavmesh());
+
+		sceneName = SceneManager.GetActiveScene().name;
 	}
 
 	IEnumerator GenerateNavmesh()
@@ -33,16 +36,11 @@ public class MapManager : Singletone<MapManager>
 			s.BuildNavMesh();
 			yield return null;
 		}
-		isBake = false;
 		yield return null;
 	}
 	public void ReBake()
 	{
-		//베이크 중일 때는 베이크 사용불가
-		if (!isBake)
-		{
-			isBake = true;
+		if(SceneManager.GetActiveScene().name == sceneName)
 			StartCoroutine(GenerateNavmesh());
-		}
 	}
 }

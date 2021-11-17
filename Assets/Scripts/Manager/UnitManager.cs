@@ -28,6 +28,12 @@ public class UnitData
         return text;
     }
 }
+public struct UnitStruct
+{
+    public UnitData newData;
+    public Unit_TYPE type;
+    public int countUnit;
+}
 
 public class UnitManager : Singletone<UnitManager>
 {
@@ -35,21 +41,17 @@ public class UnitManager : Singletone<UnitManager>
     [SerializeField] Unit[] unitPrefabs;
     [SerializeField] UnitButtonManager unitButtonManager;
     [SerializeField] LayerMask tileMask;
-
     [SerializeField] ResultMenu resultMenu;
     [SerializeField] EndGame endGame;
-
     [HideInInspector] public int maxUnitCount;
 
 
     public delegate void DelUnitEvent();                  // 델리게이트 정의.
     event DelUnitEvent OnDelUnit;                         // 이벤트 함수 선언.
 
-    private Dictionary<Unit_TYPE, UnitData> unitDatas;   // 가공된 타워 데이터.
-    public Dictionary<Unit_TYPE, int> unitCount;         // 유닛의 수.
     Unit_TYPE selectedType = Unit_TYPE.None;             // 현재 선택한 타워의 타입.
+    public UnitStruct[] unitData;
 
-    int[] numUnit;
     //유닛 소환 시간
     float callRate = 1;
     float originCallRate;
@@ -58,29 +60,20 @@ public class UnitManager : Singletone<UnitManager>
     private void Awake()
     {
         base.Awake();
+        unitData = new UnitStruct[(int)Unit.Unit_TYPE.Count];
 
         // CSV데이터를 우리가 원하는 데이터로 가공.
-        unitDatas = new Dictionary<Unit_TYPE, UnitData>();
-        unitCount= new Dictionary<Unit_TYPE, int>();
-        numUnit = new int[4];
-
-        numUnit[0] = 100;
-        numUnit[1] = 2;
-        numUnit[2] = 3;
-        numUnit[3] = 4;
-
-
         Dictionary<string, string>[] csvDatas = CSVReader.ReadCSV(data);
         for (int i = 0; i < csvDatas.Length; i++)
         {
-            UnitData newData = new UnitData(csvDatas[i]);
-            Unit_TYPE type = (Unit_TYPE)System.Enum.Parse(typeof(Unit_TYPE), newData.GetData(KEY_NAME));
-            unitDatas.Add(type, newData);
-            unitCount.Add(type, numUnit[i]);
+            UnitStruct newUnit;
+            newUnit.newData = new UnitData(csvDatas[i]);
+            newUnit.type = (Unit_TYPE)System.Enum.Parse(typeof(Unit_TYPE), newUnit.newData.GetData(KEY_NAME));
+            newUnit.countUnit = UnitCount.numUnit[newUnit.type];
+            unitData[i]= newUnit;
 
-            maxUnitCount += unitCount[type];
+            maxUnitCount += newUnit.countUnit;
         }
-
         originCallRate = callRate;
     }
 
@@ -111,9 +104,6 @@ public class UnitManager : Singletone<UnitManager>
             endGame.GameResult();
         }
     }
-
-
-
     private void MousePointToRay()
     {
         // 마우스의 현재 위치를 Ray로 변환.
@@ -126,7 +116,6 @@ public class UnitManager : Singletone<UnitManager>
             CreateUnit(setTile);
         }
     }
-
     private void CreateUnit(SetTile setTile )
     {
         // 유닛을 선택하지 않고 소환할 시 화면에 에러메세지 출력
@@ -140,14 +129,14 @@ public class UnitManager : Singletone<UnitManager>
             return;
 
         //소환가능한 유닛을 모두소환 했을때
-        if (unitCount[selectedType]<=0)
+        if (unitData[(int)selectedType].countUnit<=0)
             return;
 
         Unit newUnit = Instantiate(unitPrefabs[(int)selectedType]);
-        newUnit.Setup(unitDatas[newUnit.Type]);
+        newUnit.Setup(unitData[(int)newUnit.Type].newData);
 
         setTile.SetUnit(newUnit);
-        unitCount[newUnit.Type] -= 1;
+        unitData[(int)newUnit.Type].countUnit -= 1;
         unitButtonManager.OnCreateUnit(newUnit.Type);
 
         TextCollect.Instance.OnFalseAllText();
@@ -155,7 +144,7 @@ public class UnitManager : Singletone<UnitManager>
 
     public UnitData GetData(Unit_TYPE type)
     {
-        return unitDatas[type];
+        return unitData[(int)type].newData;
     }
 
     public void OnSelectedUnit(Unit.Unit_TYPE type)

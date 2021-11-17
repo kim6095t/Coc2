@@ -7,7 +7,6 @@ public class ResultMenu : MonoBehaviour
     [SerializeField] GameObject endGameUI;
     [SerializeField] GameObject bottomBarUI;
 
-
     public void SwitchResultMenu(bool isShow)
     {
         endGameUI.SetActive(isShow);
