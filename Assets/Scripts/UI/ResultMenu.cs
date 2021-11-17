@@ -12,5 +12,7 @@ public class ResultMenu : MonoBehaviour
     {
         endGameUI.SetActive(isShow);
         bottomBarUI.SetActive(!isShow);
+        if(isShow)
+            UnitManager.Instance.OnDelUnitInvoke();
     }
 }

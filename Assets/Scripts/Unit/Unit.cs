@@ -80,15 +80,23 @@ public class Unit : MonoBehaviour
         navi.enabled = true;
 
         RePathManager.Instance.RegestedPath(DlRePath);
+        UnitManager.Instance.RegestedDelUnit(DlDelUnit);
 
         maxSearchRadius = 100f;
         distanceBetween = maxSearchRadius;
         speed = navi.speed;
     }
 
+
     private void OnDestroy()
     {
         RePathManager.Instance.RemovePath(DlRePath);
+        UnitManager.Instance.RemoveDelUnit(DlDelUnit);
+        UnitManager.Instance.maxUnitCount--;
+    }
+    private void DlDelUnit()
+    {
+        Destroy(gameObject);
     }
 
     void Update()
@@ -256,6 +264,7 @@ public class Unit : MonoBehaviour
         DrawLine();
     }
 
+
     // 라인 렌더러 그리기.  
     private void DrawLine()
     {
@@ -306,13 +315,7 @@ public class Unit : MonoBehaviour
         hp -= damaged;
 
         if (hp <= 0)
-            OnDead();
-    }
-
-    private void OnDead()
-    {
-        Destroy(gameObject);
-        UnitManager.Instance.maxUnitCount--;
+            Destroy(gameObject);
     }
 
 #if UNITY_EDITOR

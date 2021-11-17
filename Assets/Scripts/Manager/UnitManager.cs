@@ -41,10 +41,19 @@ public class UnitManager : Singletone<UnitManager>
 
     [HideInInspector] public int maxUnitCount;
 
+
+    public delegate void DelUnitEvent();                  // 델리게이트 정의.
+    event DelUnitEvent OnDelUnit;                         // 이벤트 함수 선언.
+
     private Dictionary<Unit_TYPE, UnitData> unitDatas;   // 가공된 타워 데이터.
     public Dictionary<Unit_TYPE, int> unitCount;         // 유닛의 수.
-
     Unit_TYPE selectedType = Unit_TYPE.None;             // 현재 선택한 타워의 타입.
+
+    int[] numUnit;
+    //유닛 소환 시간
+    float callRate = 1;
+    float originCallRate;
+    float nextCallTime = 0f;
 
     private void Awake()
     {
@@ -53,6 +62,13 @@ public class UnitManager : Singletone<UnitManager>
         // CSV데이터를 우리가 원하는 데이터로 가공.
         unitDatas = new Dictionary<Unit_TYPE, UnitData>();
         unitCount= new Dictionary<Unit_TYPE, int>();
+        numUnit = new int[4];
+
+        numUnit[0] = 100;
+        numUnit[1] = 2;
+        numUnit[2] = 3;
+        numUnit[3] = 4;
+
 
         Dictionary<string, string>[] csvDatas = CSVReader.ReadCSV(data);
         for (int i = 0; i < csvDatas.Length; i++)
@@ -60,20 +76,11 @@ public class UnitManager : Singletone<UnitManager>
             UnitData newData = new UnitData(csvDatas[i]);
             Unit_TYPE type = (Unit_TYPE)System.Enum.Parse(typeof(Unit_TYPE), newData.GetData(KEY_NAME));
             unitDatas.Add(type, newData);
-            unitCount.Add(type, 0);
+            unitCount.Add(type, numUnit[i]);
 
             maxUnitCount += unitCount[type];
         }
-    }
 
-  
-    //유닛 소환 시간
-    float callRate = 1;
-    float originCallRate;
-    float nextCallTime = 0f;
-
-    private void Start()
-    {
         originCallRate = callRate;
     }
 
@@ -97,13 +104,15 @@ public class UnitManager : Singletone<UnitManager>
             }
         }
 
+        //더이상 유닛이 없을 때
         if (maxUnitCount <= 0)
         {
             resultMenu.SwitchResultMenu(true);
             endGame.GameResult();
-            Debug.Log("더이상 소환 가능한 유닛 없음");
         }
     }
+
+
 
     private void MousePointToRay()
     {
@@ -152,5 +161,19 @@ public class UnitManager : Singletone<UnitManager>
     public void OnSelectedUnit(Unit.Unit_TYPE type)
     {
         selectedType = type;
+    }
+
+    public void RegestedDelUnit(DelUnitEvent OnDelUnit)
+    {
+        this.OnDelUnit += OnDelUnit;
+    }
+    public void RemoveDelUnit(DelUnitEvent OnDelUnit)
+    {
+        this.OnDelUnit -= OnDelUnit;
+    }
+
+    public void OnDelUnitInvoke()
+    {
+        OnDelUnit?.Invoke();
     }
 }
