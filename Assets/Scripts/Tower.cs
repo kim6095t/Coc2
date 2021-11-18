@@ -32,7 +32,8 @@ public class Tower : MonoBehaviour
         gold = 100f;
         jelly = 100f;
 
-        ResourceDateManager.Instance.RegestedResource(DlAddResource);
+        MyResourceData.Instance.RegestedResource(DlAddResource);
+        EnemyResourceData.Instance.RegestedResource(DlAddResource);
     }
 
 
@@ -108,24 +109,25 @@ public class Tower : MonoBehaviour
     {
         StageClearPersent.Instance.OnDestroyTarget();
 
-        ResourceDateManager.Instance.getGold += gold;
-        ResourceDateManager.Instance.getJelly += jelly;
+        EnemyResourceData.Instance.getGold += gold;
+        EnemyResourceData.Instance.getJelly += jelly;
 
-        ResourceDateManager.Instance.myGold += gold;
-        ResourceDateManager.Instance.myJelly += jelly;
-        ResourceDateManager.Instance.RemoveResource(DlRemoveResource);
+        MyResourceData.Instance.myGold += gold;
+        MyResourceData.Instance.myJelly += jelly;
+        MyResourceData.Instance.RemoveResource(DlRemoveResource);
+        EnemyResourceData.Instance.RemoveResource(DlRemoveResource);
     }
 
     public void DlAddResource()
     {
-        ResourceDateManager.Instance.enemyGold += gold;
-        ResourceDateManager.Instance.enemyJelly += jelly;
+        EnemyResourceData.Instance.enemyGold += gold;
+        EnemyResourceData.Instance.enemyJelly += jelly;
     }
 
     public void DlRemoveResource()
     {
-        ResourceDateManager.Instance.enemyGold -= gold;
-        ResourceDateManager.Instance.enemyJelly -= jelly;
+        EnemyResourceData.Instance.enemyGold -= gold;
+        EnemyResourceData.Instance.enemyJelly -= jelly;
     }
 
 
