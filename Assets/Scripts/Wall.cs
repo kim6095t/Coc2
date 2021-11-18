@@ -21,7 +21,11 @@ public class Wall : MonoBehaviour
 
     private void OnDestroy()
     {
-        MapManager.Instance.ReBake();
-        RePathManager.Instance.RePath();
+        //예외처리
+        if (MapManager.Instance)
+        {
+            MapManager.Instance.ReBake();
+            RePathManager.Instance.RePath();
+        }
     }
 }

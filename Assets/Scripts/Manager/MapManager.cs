@@ -40,7 +40,9 @@ public class MapManager : Singletone<MapManager>
 	}
 	public void ReBake()
 	{
-		if(SceneManager.GetActiveScene().name == sceneName)
+		if (SceneManager.GetActiveScene().name == sceneName)
+		{
 			StartCoroutine(GenerateNavmesh());
+		}
 	}
 }

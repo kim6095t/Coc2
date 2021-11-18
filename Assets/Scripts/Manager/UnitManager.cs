@@ -64,6 +64,11 @@ public class UnitManager : Singletone<UnitManager>
 
         // CSV데이터를 우리가 원하는 데이터로 가공.
         Dictionary<string, string>[] csvDatas = CSVReader.ReadCSV(data);
+
+        //예외처리
+        if (csvDatas == null)
+            return;
+
         for (int i = 0; i < csvDatas.Length; i++)
         {
             UnitStruct newUnit;
@@ -79,6 +84,10 @@ public class UnitManager : Singletone<UnitManager>
 
     private void Update()
     {
+        //예외처리
+        if (EventSystem.current == null)
+            return;
+
         if (!EventSystem.current.IsPointerOverGameObject()) {
             if (Input.GetMouseButtonDown(0))
             {
@@ -95,7 +104,7 @@ public class UnitManager : Singletone<UnitManager>
             {
                 callRate = originCallRate;
             }
-        }
+       }
 
         //더이상 유닛이 없을 때
         if (maxUnitCount <= 0)

@@ -8,6 +8,13 @@ public class CSVReader : MonoBehaviour
     {
         List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
 
+        //예외처리
+        if (data == null)
+        {
+            return null;
+        }
+
+
         string[] split = data.text.Split('\n');
         string[] keys = split[0].Split(',');                      // 0번째 열의 키 값을 대입.
         string[] dataColumns = new string[split.Length - 1];      // 전체 열의 개수 - 1(키 값)

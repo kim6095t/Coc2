@@ -13,6 +13,7 @@ public class StageClearPersent : Singletone<StageClearPersent>
     float allTargetNum;
     float nowClearPersent;
     bool[] activeStar;
+    string sceneName;
 
     public string Persent => persent.text;
     public bool[] ActiveStar => activeStar;
@@ -32,14 +33,21 @@ public class StageClearPersent : Singletone<StageClearPersent>
 
     public void OnDestroyTarget()
     {
-        nowTargetNum--;
-        RenewPersent();
+        //抗寇贸府
+        if (MapManager.Instance)
+        {
+            nowTargetNum--;
+            RenewPersent();
+        }
     }
 
     private void RenewPersent()
     {
         nowClearPersent = ((allTargetNum - nowTargetNum) / allTargetNum) * 100;
-        persent.text = $"{(int)nowClearPersent}%";
+
+        //抗寇贸府
+        if(persent)
+            persent.text = $"{(int)nowClearPersent}%";
 
 
         if (nowClearPersent > 33 && activeStar[0]==false)

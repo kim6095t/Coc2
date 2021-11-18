@@ -46,18 +46,24 @@ public class ResourceDateManager : Singletone<ResourceDateManager>
     public void RegestedResource(ResourceDataEvent DlResourceData)
     {
         this.DlResourceData += DlResourceData;
-        DlResourceData?.Invoke();
 
-        enemyResource.OnUpdateResource();
-        myResource.OnUpdateResource();
+        if (MapManager.Instance)
+        {
+            DlResourceData?.Invoke();
+            enemyResource.OnUpdateResource();
+            myResource.OnUpdateResource();
+        }
     }
     public void RemoveResource(ResourceDataEvent DlResourceData)
     {
         this.DlResourceData -= DlResourceData;
-        DlResourceData?.Invoke();
 
-        enemyResource.OnUpdateResource();
-        myResource.OnUpdateResource();
+        if (MapManager.Instance)
+        {
+            DlResourceData?.Invoke();
+            enemyResource.OnUpdateResource();
+            myResource.OnUpdateResource();
+        }
     }
 
     void OnInit()
