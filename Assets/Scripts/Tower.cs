@@ -32,7 +32,6 @@ public class Tower : MonoBehaviour
         gold = 100f;
         jelly = 100f;
 
-        //MyResourceData.Instance.RegestedResource(DlAddResource);
         EnemyResourceData.Instance.RegestedResource(DlAddResource);
     }
 
@@ -114,7 +113,6 @@ public class Tower : MonoBehaviour
 
         MyResourceData.Instance.myGold += gold;
         MyResourceData.Instance.myJelly += jelly;
-        MyResourceData.Instance.RemoveResource(DlRemoveResource);
         EnemyResourceData.Instance.RemoveResource(DlRemoveResource);
     }
 

@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class JellyMine : MonoBehaviour
+{
+    Camera mainCamera;
+    float time;
+    int perSecondGetJelly;
+    int jellyResource;
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+        perSecondGetJelly = 10;
+    }
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+        jellyResource=perSecondGetJelly * (int)time;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            GetJelly();
+        }
+    }
+
+    private void GetJelly()
+    {
+        RaycastHit hit;
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out hit);
+
+        if (hit.transform.gameObject== gameObject)
+        {
+            Debug.Log($"È¹µæÇÑ Á©¸®´Â {jellyResource}ÀÔ´Ï´Ù");
+            MyResourceData.Instance.GetJellyToMine(jellyResource);
+            time = 0f;
+        }
+    }
+}

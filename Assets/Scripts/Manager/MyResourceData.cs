@@ -6,9 +6,6 @@ public class MyResourceData : Singletone<MyResourceData>
 {
     [SerializeField] MyResourceUI myResource;
 
-    public delegate void MyResourceDataEvent();         // 델리게이트 정의.
-    event MyResourceDataEvent DlMyResourceData;         // 이벤트 함수 선언.
-
     [HideInInspector] public float maxGold;
     [HideInInspector] public float maxJelly;
     [HideInInspector] public float myGold;
@@ -40,25 +37,16 @@ public class MyResourceData : Singletone<MyResourceData>
         }
     }
 
-    public void RegestedResource(MyResourceDataEvent DlMyResourceData)
+    public void GetGoldToMine(int amount)
     {
-        this.DlMyResourceData += DlMyResourceData;
-
-        if (MapManager.Instance)
-        {
-            DlMyResourceData?.Invoke();
-            myResource.OnUpdateResource();
-        }
+        myGold += amount;
+        myResource.OnUpdateResource();
     }
-    public void RemoveResource(MyResourceDataEvent DlMyResourceData)
-    {
-        this.DlMyResourceData -= DlMyResourceData;
 
-        if (MapManager.Instance)
-        {
-            DlMyResourceData?.Invoke();
-            myResource.OnUpdateResource();
-        }
+    public void GetJellyToMine(int amount)
+    {
+        myJelly += amount;
+        myResource.OnUpdateResource();
     }
 
     void OnInit()

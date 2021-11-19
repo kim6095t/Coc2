@@ -164,7 +164,7 @@ public class Unit : MonoBehaviour
 
         moveSpeed = int.Parse(data.GetData(KEY_MOVESPEED));
         price = int.Parse(data.GetData(KEY_PRICE));
-        //hp = int.Parse(data.GetData(KEY_HP));
+        hp = int.Parse(data.GetData(KEY_HP));
     }
 
 
