@@ -11,6 +11,8 @@ public class EnemyResourceData : Singletone<EnemyResourceData>
 
     [HideInInspector] public float enemyGold;
     [HideInInspector] public float enemyJelly;
+    [HideInInspector] public float getGold;
+    [HideInInspector] public float getJelly;
 
     public void RegestedResource(EnemyResourceDataEvent DlEnemyResourceData)
     {

@@ -25,8 +25,8 @@ public class EndGame : MonoBehaviour
         StartCoroutine(CountStar(activeStar));
 
         StartCoroutine(Count(StageClearPersent.Instance.NowClearPersent, score));
-        StartCoroutine(Count(ResourceDateManager.Instance.getGold, gold));
-        StartCoroutine(Count(ResourceDateManager.Instance.getJelly, jelly));
+        StartCoroutine(Count(EnemyResourceData.Instance.getGold, gold));
+        StartCoroutine(Count(EnemyResourceData.Instance.getJelly, jelly));
     }
 
     IEnumerator CountStar(int target)

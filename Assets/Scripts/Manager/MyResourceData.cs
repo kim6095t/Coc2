@@ -7,7 +7,7 @@ public class MyResourceData : Singletone<MyResourceData>
     [SerializeField] MyResourceUI myResource;
 
     public delegate void MyResourceDataEvent();         // 델리게이트 정의.
-    event MyResourceDataEvent DlMyResourceData;           // 이벤트 함수 선언.
+    event MyResourceDataEvent DlMyResourceData;         // 이벤트 함수 선언.
 
     [HideInInspector] public float maxGold;
     [HideInInspector] public float maxJelly;

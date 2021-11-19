@@ -17,14 +17,14 @@ public class MyResourceUI : MonoBehaviour
 
     public void OnUpdateResource()
     {
-        if (ResourceDateManager.Instance)
+        if (MyResourceData.Instance && goldText && jellyText)
         //예외처리
         {
-            goldText.text = $"{ ResourceDateManager.Instance.myGold}";
-            jellyText.text = $"{ ResourceDateManager.Instance.myJelly}";
+            goldText.text = $"{ MyResourceData.Instance.myGold}";
+            jellyText.text = $"{ MyResourceData.Instance.myJelly}";
 
-            goldBar.fillAmount = ResourceDateManager.Instance.myGold / ResourceDateManager.Instance.maxGold;
-            jellyBar.fillAmount = ResourceDateManager.Instance.myJelly / ResourceDateManager.Instance.maxJelly;
+            goldBar.fillAmount = MyResourceData.Instance.myGold / MyResourceData.Instance.maxGold;
+            jellyBar.fillAmount = MyResourceData.Instance.myJelly / MyResourceData.Instance.maxJelly;
         }
     }
 

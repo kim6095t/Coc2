@@ -11,10 +11,10 @@ public class EnemyResourceUI : MonoBehaviour
     public void OnUpdateResource()
     {
         //예외처리
-        if (goldText && jellyText && ResourceDateManager.Instance)
+        if (goldText && jellyText && EnemyResourceData.Instance)
         {
-            goldText.text = $"{ ResourceDateManager.Instance.enemyGold}";
-            jellyText.text = $"{ ResourceDateManager.Instance.enemyJelly}";
+            goldText.text = $"{ EnemyResourceData.Instance.enemyGold}";
+            jellyText.text = $"{ EnemyResourceData.Instance.enemyJelly}";
         }
     }
 }
