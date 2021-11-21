@@ -26,6 +26,10 @@ public class SetTile : MonoBehaviour
         {
             GameObject target = hits[i].collider.gameObject;
 
+            //예외처리
+            if (MapManager.Instance==null)
+                return;
+
             if (target.CompareTag(MapManager.Instance.TAG_PLAYABLE))
             {
                 onObject = target;

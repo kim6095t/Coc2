@@ -32,6 +32,9 @@ public class JellyMine : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out hit);
 
+        if (hit.collider==null)
+            return;
+
         if (hit.transform.gameObject== gameObject)
         {
             Debug.Log($"È¹µæÇÑ Á©¸®´Â {jellyResource}ÀÔ´Ï´Ù");

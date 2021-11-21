@@ -43,6 +43,18 @@ public class MyResourceData : Singletone<MyResourceData>
         myResource.OnUpdateResource();
     }
 
+    public void UseGoldToMine(int amount)
+    {
+        if (amount > myGold)
+        {
+            Debug.Log("사용가능 골드 초과");
+            return;
+        }
+
+        myGold -= amount;
+        myResource.OnUpdateResource();
+    }
+
     public void GetJellyToMine(int amount)
     {
         myJelly += amount;

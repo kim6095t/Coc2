@@ -19,6 +19,7 @@ public class MapManager : Singletone<MapManager>
 	{
 		base.Awake();
 		//베이킹 할 맵을 지정하고 만든다.
+
 		GameObject obj = Instantiate(_mapPrefab, _generatePos, Quaternion.identity, transform);
 		_generatePos += new Vector3(50, 0, 50);
 		surfaces = gameObject.GetComponentsInChildren<NavMeshSurface>();

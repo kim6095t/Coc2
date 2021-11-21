@@ -7,17 +7,27 @@ using UnityEngine.UI;
 public class ButtonUI : MonoBehaviour
 {
     [SerializeField] GameObject GameSelectMenu;
+    [SerializeField] ShopScene shopScene;
 
     public void OnClickAttack()
     {
         GameSelectMenu.gameObject.SetActive(true);
     }
 
-    public void OnClickExit()
+    public void OnClickMenuExit()
     {
         GameSelectMenu.gameObject.SetActive(false);
     }
 
+    public void OnClickShop()
+    {
+        shopScene.SwitchResultMenu(true);
+    }
+
+    public void OnClickShopExit()
+    {
+        shopScene.SwitchResultMenu(false);
+    }
 
     public void OnClickStage1()
     {
