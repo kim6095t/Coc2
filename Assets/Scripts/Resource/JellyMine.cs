@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JellyMine : MonoBehaviour
+public class JellyMine : ObjectProperty
 {
-    Camera mainCamera;
     float time;
     int perSecondGetJelly;
     int jellyResource;
 
     private void Start()
     {
-        mainCamera = Camera.main;
+        base.Start();
         perSecondGetJelly = 10;
     }
 

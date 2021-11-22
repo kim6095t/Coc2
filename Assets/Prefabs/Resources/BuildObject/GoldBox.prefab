@@ -243,6 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93041991f7caea4f80e9be159f5900c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!65 &-6911864998469292500
 BoxCollider:
   m_ObjectHideFlags: 0

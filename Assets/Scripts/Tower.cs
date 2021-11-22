@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class Tower : ObjectProperty
 {
     [Header("Search")]
     [SerializeField] float searchRadius;
@@ -29,10 +29,13 @@ public class Tower : MonoBehaviour
 
     public void Start()
     {
+        base.Start();
+
         gold = 100f;
         jelly = 100f;
 
-        EnemyResourceData.Instance.RegestedResource(DlAddResource);
+        if(!sceneName.Equals("TownScene"))
+            EnemyResourceData.Instance.RegestedResource(DlAddResource);
     }
 
 
@@ -106,14 +109,17 @@ public class Tower : MonoBehaviour
     
     private void OnDestroy()
     {
-        StageClearPersent.Instance.OnDestroyTarget();
+        if (!sceneName.Equals("TownScene"))
+        {
+            StageClearPersent.Instance.OnDestroyTarget();
 
-        EnemyResourceData.Instance.getGold += gold;
-        EnemyResourceData.Instance.getJelly += jelly;
+            EnemyResourceData.Instance.getGold += gold;
+            EnemyResourceData.Instance.getJelly += jelly;
 
-        MyResourceData.Instance.myGold += gold;
-        MyResourceData.Instance.myJelly += jelly;
-        EnemyResourceData.Instance.RemoveResource(DlRemoveResource);
+            MyResourceData.Instance.myGold += gold;
+            MyResourceData.Instance.myJelly += jelly;
+            EnemyResourceData.Instance.RemoveResource(DlRemoveResource);
+        }
     }
 
     public void DlAddResource()

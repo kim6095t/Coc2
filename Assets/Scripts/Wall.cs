@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class Wall : MonoBehaviour
+public class Wall : ObjectProperty
 {
     [SerializeField] float Hp;
+
+    private void Start()
+    {
+        base.Start();
+    }
 
     public bool OnDamaged(float damaged)
     {

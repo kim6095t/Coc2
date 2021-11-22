@@ -1,52 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GoldMine : MonoBehaviour
+
+public class GoldMine : ObjectProperty
 {
-    Camera mainCamera;
     float time;
     int perSecondGetGold;
     int goldResource;
 
-    string sceneName;
-
     private void Start()
     {
-        mainCamera = Camera.main;
+        base.Start();
         perSecondGetGold = 10;
-        sceneName = SceneManager.GetActiveScene().name;
     }
 
     private void Update()
     {
-        if (!sceneName.Equals("TownScene"))
-            return;
-
-
         time += Time.deltaTime;
         goldResource = perSecondGetGold * (int)time;
 
         if (Input.GetMouseButtonDown(0))
         {
             GetGold();
-        }
-
-        
-    }
-
-    private void OnMouseDrag()
-    {
-        RaycastHit hit;
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out hit);
-
-        if (hit.transform.gameObject == gameObject)
-        {
-            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
-            Vector3 transPos = mainCamera.ScreenToWorldPoint(mousePos);
-            transform.position = new Vector3(transPos.x, transform.position.y, transPos.z);
         }
     }
 
