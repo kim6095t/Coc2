@@ -1,18 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEngine;
 
 
 [System.Serializable]
 public class Data
 {
-    public string m_name;
-    public Vector3 m_vecPositon;
+    [SerializeField] public string m_name;
+    [SerializeField] public Vector3 m_vecPositon;
+
+
+    public string Name => m_name;
+    public Vector3 Vec => m_vecPositon;
+
+    
+    public Data()
+    {
+
+    }
+    public Data(string m_name, Vector3 m_vecPosition)
+    {
+        this.m_name = m_name;
+        this.m_vecPositon = m_vecPosition;
+    }
 }
 
 public class ObjectLocationManager : Singletone<ObjectLocationManager>
 {
-    List<Data> data;
+    [SerializeField] List<Data> data;
 
     private void Awake()
     {
@@ -34,8 +51,10 @@ public class ObjectLocationManager : Singletone<ObjectLocationManager>
         //Debug.Log(targetData.m_vecPositon);
     }
 
+
     private void OnDestroy()
     {
-        Debug.Log(data.Count);   
+
+        File.WriteAllText(Application.dataPath + "/TestJson.json", JsonUtility.ToJson(data));
     }
 }
