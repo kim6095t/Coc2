@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class GoldMine : ObjectProperty
 {
     float time;
     int perSecondGetGold;
     int goldResource;
+    
 
     private void Start()
     {
         base.Start();
         perSecondGetGold = 10;
+        prefabName = "GoldBox";
     }
 
     private void Update()

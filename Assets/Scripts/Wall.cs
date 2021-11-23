@@ -9,6 +9,7 @@ public class Wall : ObjectProperty
     private void Start()
     {
         base.Start();
+        prefabName = "Wall";
     }
 
     public bool OnDamaged(float damaged)

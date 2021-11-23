@@ -12,6 +12,7 @@ public class JellyMine : ObjectProperty
     {
         base.Start();
         perSecondGetJelly = 10;
+        prefabName = "JellyBox";
     }
 
     private void Update()

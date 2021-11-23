@@ -8,6 +8,7 @@ public class ObjectProperty : MonoBehaviour
     protected Camera mainCamera;
     protected string sceneName;
     LayerMask tileMask;
+    [HideInInspector]public string prefabName;
 
     protected void Start()
     {

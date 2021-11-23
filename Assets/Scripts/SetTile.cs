@@ -7,7 +7,6 @@ public class SetTile : MonoBehaviour
     private GameObject onObject;        // 타일 위에 존재하는 오브젝트.
     public bool IsOnObject => onObject != null;
 
-
     private void Start()
     {
         FindOnObject();
@@ -25,7 +24,7 @@ public class SetTile : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             GameObject target = hits[i].collider.gameObject;
-            Debug.Log(target);
+            ObjectLocationManager.Instance.DataCreate(target);
 
             //예외처리
             if (MapManager.Instance==null)
