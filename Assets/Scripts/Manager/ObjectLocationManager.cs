@@ -2,43 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 
 [System.Serializable]
 public class Data
 {
-    [SerializeField] public string m_name;
-    [SerializeField] public Vector3 m_vecPositon;
+    public string m_name;
+    public Vector3 m_vecPositon;
+}
 
-
-    public string Name => m_name;
-    public Vector3 Vec => m_vecPositon;
-
-    
-    public Data()
+public class ArrayJson<Data>
+{
+    public Data[] datas;
+    public ArrayJson(Data[] datas)
     {
-
-    }
-    public Data(string m_name, Vector3 m_vecPosition)
-    {
-        this.m_name = m_name;
-        this.m_vecPositon = m_vecPosition;
+        this.datas = datas;
     }
 }
 
 public class ObjectLocationManager : Singletone<ObjectLocationManager>
 {
-    [SerializeField] List<Data> data;
+    List<Data> data;
 
     private void Awake()
     {
         base.Awake();
+
         data = new List<Data>();
+        string loadData = File.ReadAllText(Application.dataPath + "/TestJson.json");
+        ArrayJson<Data> json = JsonUtility.FromJson<ArrayJson<Data>>(loadData);
+
+        for(int i=0; i < json.datas.Length; i++)
+        {
+            GameObject prefab= (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/Prefabs/Resources/BuildObject/" +
+                $"{json.datas[i].m_name}.prefab", typeof(GameObject));
+            GameObject gameObject = Instantiate(prefab);
+            gameObject.transform.position = json.datas[i].m_vecPositon;
+        }
     }
 
-    public void DataCreate(GameObject target)
+    public void DataSave(GameObject target)
     {
+        Debug.Log("hi");
         Data targetData = new Data();
         string name=target.name.Split('(')[0];
         
@@ -46,15 +53,15 @@ public class ObjectLocationManager : Singletone<ObjectLocationManager>
         targetData.m_vecPositon = target.transform.position;
 
         data.Add(targetData);
-
-        Debug.Log(targetData.m_name);
-        //Debug.Log(targetData.m_vecPositon);
     }
 
-
-    private void OnDestroy()
+    private void OnApplicationQuit()
     {
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Playable");
+        for(int i=0; i<obj.Length; i++)
+            DataSave(obj[i]);
 
-        File.WriteAllText(Application.dataPath + "/TestJson.json", JsonUtility.ToJson(data));
+        ArrayJson<Data> saveData = new ArrayJson<Data>(data.ToArray());
+        File.WriteAllText(Application.dataPath + "/TestJson.json", JsonUtility.ToJson(saveData));
     }
 }

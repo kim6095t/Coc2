@@ -24,8 +24,7 @@ public class SetTile : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             GameObject target = hits[i].collider.gameObject;
-            ObjectLocationManager.Instance.DataCreate(target);
-
+            
             //예외처리
             if (MapManager.Instance==null)
                 return;

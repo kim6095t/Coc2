@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: -5355355728605695700}
   m_Layer: 11
   m_Name: JellyBox
-  m_TagString: Untagged
+  m_TagString: Playable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,9 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4c074c269508d40bd2ac61a48eb38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMask:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!65 &-5355355728605695700
 BoxCollider:
   m_ObjectHideFlags: 0

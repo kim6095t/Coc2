@@ -33,7 +33,6 @@ public class Tower : ObjectProperty
 
         gold = 100f;
         jelly = 100f;
-        prefabName = "Tower";
 
         if (!sceneName.Equals("TownScene"))
             EnemyResourceData.Instance.RegestedResource(DlAddResource);

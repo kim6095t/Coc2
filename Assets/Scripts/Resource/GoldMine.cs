@@ -13,7 +13,6 @@ public class GoldMine : ObjectProperty
     {
         base.Start();
         perSecondGetGold = 10;
-        prefabName = "GoldBox";
     }
 
     private void Update()
