@@ -6,7 +6,9 @@ using static Unit;
 public class UnitCreateSceneUI : MonoBehaviour
 {
     [SerializeField] UnitButton buttonPrefab;
+    [SerializeField] Transform transform;
     UnitButton[] unitButtons;
+    
 
     private void Start()
     {
@@ -14,11 +16,12 @@ public class UnitCreateSceneUI : MonoBehaviour
 
         for (Unit_TYPE type = 0; type < Unit_TYPE.Count; type++)
         {
-            UnitData unitData = UnitManager.Instance.GetData(type);
+            //UnitData unitData = UnitManager.Instance.GetData(type);
             UnitButton newButton = Instantiate(buttonPrefab, transform);
             unitButtons[(int)type] = newButton;
 
-            newButton.Setup(unitData);
+            //newButton.SetUpToWar(unitData);
         }
     }
+
 }

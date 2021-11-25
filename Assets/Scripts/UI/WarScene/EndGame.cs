@@ -12,7 +12,7 @@ public class EndGame : MonoBehaviour
 
     public void GameResult()
     {
-        UnitManager.Instance.OnDelUnitInvoke();
+        UnitCreateManager.Instance.OnDelUnitInvoke();
 
         int activeStar = 0;
         for (int i = 0; i < stars.Length; i++) {

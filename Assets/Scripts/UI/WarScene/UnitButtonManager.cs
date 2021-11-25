@@ -21,7 +21,7 @@ public class UnitButtonManager : MonoBehaviour
             UnitButton newButton = Instantiate(buttonPrefab, transform);
             unitButtons[(int)type] = newButton;
 
-            newButton.Setup(unitData);
+            newButton.SetUpToWar(unitData);
             MadeSlot--;
         }
 

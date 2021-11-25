@@ -80,7 +80,7 @@ public class Unit : MonoBehaviour
         navi.enabled = true;
 
         RePathManager.Instance.RegestedPath(DlRePath);
-        UnitManager.Instance.RegestedDelUnit(DlDelUnit);
+        UnitCreateManager.Instance.RegestedDelUnit(DlDelUnit);
 
         maxSearchRadius = 100f;
         distanceBetween = maxSearchRadius;
@@ -91,8 +91,8 @@ public class Unit : MonoBehaviour
     private void OnDestroy()
     {
         RePathManager.Instance.RemovePath(DlRePath);
-        UnitManager.Instance.RemoveDelUnit(DlDelUnit);
-        UnitManager.Instance.maxUnitCount--;
+        UnitCreateManager.Instance.RemoveDelUnit(DlDelUnit);
+        UnitCreateManager.Instance.maxUnitCount--;
     }
     private void DlDelUnit()
     {
