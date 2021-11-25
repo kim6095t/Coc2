@@ -19,6 +19,7 @@ public class Unit : MonoBehaviour
     public static string KEY_MOVESPEED = "MoveSpeed";
     public static string KEY_PRICE = "Price";
     public static string KEY_HP = "Hp";
+    public static string KEY_COUNT = "UnitCount";
 
     public enum Unit_TYPE
     {
@@ -49,6 +50,7 @@ public class Unit : MonoBehaviour
     protected int moveSpeed;
     protected int price;
     protected float hp;
+    protected int unitCount;
 
 
     //전역 변수로 사용될 리스트
@@ -165,6 +167,7 @@ public class Unit : MonoBehaviour
         moveSpeed = int.Parse(data.GetData(KEY_MOVESPEED));
         price = int.Parse(data.GetData(KEY_PRICE));
         hp = int.Parse(data.GetData(KEY_HP));
+        unitCount = int.Parse(data.GetData(KEY_COUNT));
     }
 
 

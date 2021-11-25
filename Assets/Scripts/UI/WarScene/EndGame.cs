@@ -12,6 +12,8 @@ public class EndGame : MonoBehaviour
 
     public void GameResult()
     {
+        UnitCreateManager ucm = UnitCreateManager.Instance;
+
         UnitCreateManager.Instance.OnDelUnitInvoke();
 
         int activeStar = 0;

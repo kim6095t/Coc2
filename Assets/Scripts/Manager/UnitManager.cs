@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Unit;     // Unit 클래스의 영역을 포함하겠다.
@@ -37,16 +38,15 @@ public struct UnitStruct
 
 public class UnitManager : Singletone<UnitManager>
 {
-    [SerializeField] protected TextAsset data;
+    [SerializeField] TextAsset data;
     public UnitStruct[] unitData;
-    protected Dictionary<string, string>[] csvDatas;
+    Dictionary<string, string>[] csvDatas;
 
-    protected void Awake()
+    private void Awake()
     {
         base.Awake();
 
         unitData = new UnitStruct[(int)Unit.Unit_TYPE.Count];
-
         // CSV데이터를 우리가 원하는 데이터로 가공.
         csvDatas = CSVReader.ReadCSV(data);
 
@@ -59,7 +59,7 @@ public class UnitManager : Singletone<UnitManager>
             UnitStruct newUnit;
             newUnit.newData = new UnitData(csvDatas[i]);
             newUnit.type = (Unit_TYPE)System.Enum.Parse(typeof(Unit_TYPE), newUnit.newData.GetData(KEY_NAME));
-            newUnit.countUnit = UnitCount.numUnit[newUnit.type];
+            newUnit.countUnit = (int)System.Enum.Parse(typeof(Unit_TYPE), newUnit.newData.GetData(KEY_COUNT));
 
             unitData[i]= newUnit;
         }
@@ -67,6 +67,39 @@ public class UnitManager : Singletone<UnitManager>
 
     public UnitData GetData(Unit_TYPE type)
     {
+        Debug.Log(1);
         return unitData[(int)type].newData;
     }
+
+    private void OnDestroy()
+    {
+        sw = new StreamWriter("C:\\Users\\user\\Desktop\\Test.txt", false);
+        if (count == 0)
+        {
+            sw.WriteLine(txtRevisionNext.Text);
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                sw.WriteLine(lines[i]);
+            }
+            sw.Close();
+            MessageBox.Show("수정되었습니다.");
+        }
+        else
+        {
+            for (int i = 0; i < count; i++)
+            {
+                sw.WriteLine(lines[i]);
+            }
+            sw.WriteLine(txtRevisionNext.Text);
+            for (int i = count + 1; i < lines.Length; i++)
+            {
+                sw.WriteLine(lines[i]);
+            }
+            sw.Close();
+            MessageBox.Show("수정되었습니다.");
+        }
+    }
+
+    https://lena19760323.tistory.com/1
 }

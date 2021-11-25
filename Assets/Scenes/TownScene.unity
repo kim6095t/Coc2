@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3330,7 +3330,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1731994508}
         m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
-        m_MethodName: OnClickShopExit
+        m_MethodName: OnClickUnitExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12445,7 +12445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &942607328
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22935,6 +22935,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8041586156912295375, guid: 49056d56c2c30a545909e6d66796f2a7, type: 3}
   m_PrefabInstance: {fileID: 1632990333}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1634089225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1634089226}
+  - component: {fileID: 1634089227}
+  m_Layer: 0
+  m_Name: UnitManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1634089226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634089225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1902096404}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1634089227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634089225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab2728738779e146b923b3e4b69c37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 4900000, guid: fd5e2ada2385d124abfe1821dcf300ac, type: 3}
 --- !u!1001 &1641581401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24325,6 +24369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameSelectMenu: {fileID: 243558339}
+  unitCreateScene: {fileID: 942607327}
   shopScene: {fileID: 2091266544}
 --- !u!1001 &1739082983
 PrefabInstance:
@@ -25631,7 +25676,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1839835901}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1731994508}
+        m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
+        m_MethodName: OnClickUnitScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1839835901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26487,6 +26544,7 @@ Transform:
   - {fileID: 1797715782}
   - {fileID: 1997595178}
   - {fileID: 1848375240}
+  - {fileID: 1634089226}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -16,11 +16,14 @@ public class UnitCreateSceneUI : MonoBehaviour
 
         for (Unit_TYPE type = 0; type < Unit_TYPE.Count; type++)
         {
-            //UnitData unitData = UnitManager.Instance.GetData(type);
+            Debug.Log(type);
+            Debug.Log((int)Unit_TYPE.Count);
+
+            UnitData unitData = UnitManager.Instance.GetData(type);
             UnitButton newButton = Instantiate(buttonPrefab, transform);
             unitButtons[(int)type] = newButton;
 
-            //newButton.SetUpToWar(unitData);
+            newButton.SetUpToWar(unitData);
         }
     }
 

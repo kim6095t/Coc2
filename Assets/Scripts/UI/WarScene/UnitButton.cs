@@ -22,7 +22,7 @@ public class UnitButton : MonoBehaviour
         text.text = string.Format("{0:#,##0}", UnitManager.Instance.unitData[(int)type].countUnit);
 
         // 버튼에 이벤트 등록.
-        GetComponent<Button>().onClick.AddListener(() => UnitManager.Instance.OnSelectedUnit(type));
+        GetComponent<Button>().onClick.AddListener(() => UnitCreateManager.Instance.OnSelectedUnit(type));
     }
 
 

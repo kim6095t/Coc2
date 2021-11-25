@@ -10,6 +10,6 @@ public class Singletone<T> : MonoBehaviour
 
     protected void Awake()
     {
-        instance = GetComponent<T>();
+        instance = this as T;
     }
 }

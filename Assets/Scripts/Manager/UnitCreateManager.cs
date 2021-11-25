@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using static Unit;     // Unit 클래스의 영역을 포함하겠다.
 
 
-public class UnitCreateManager : UnitManager
+public class UnitCreateManager : Singletone<UnitCreateManager>
 {
     [SerializeField] Unit[] unitPrefabs;
     [SerializeField] UnitButtonManager unitButtonManager;
@@ -24,11 +24,12 @@ public class UnitCreateManager : UnitManager
     float originCallRate;
     float nextCallTime = 0f;
 
-    private void Awake()
+    private void Start()
     {
         base.Awake();
-        for (int i = 0; i < unitData.Length; i++)
-            maxUnitCount += unitData[i].countUnit;
+
+        for (int i = 0; i < UnitManager.Instance.unitData.Length; i++)
+            maxUnitCount += UnitManager.Instance.unitData[i].countUnit;
         originCallRate = callRate;
     }
 
@@ -89,14 +90,14 @@ public class UnitCreateManager : UnitManager
             return;
 
         //소환가능한 유닛을 모두소환 했을때
-        if (unitData[(int)selectedType].countUnit <= 0)
+        if (UnitManager.Instance.unitData[(int)selectedType].countUnit <= 0)
             return;
 
         Unit newUnit = Instantiate(unitPrefabs[(int)selectedType]);
-        newUnit.Setup(unitData[(int)newUnit.Type].newData);
+        newUnit.Setup(UnitManager.Instance.unitData[(int)newUnit.Type].newData);
 
         setTile.SetUnit(newUnit);
-        unitData[(int)newUnit.Type].countUnit -= 1;
+        UnitManager.Instance.unitData[(int)newUnit.Type].countUnit -= 1;
         unitButtonManager.OnCreateUnit(newUnit.Type);
 
         TextCollect.Instance.OnFalseAllText();

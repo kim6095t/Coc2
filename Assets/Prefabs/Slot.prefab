@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitImage: {fileID: 3081831727964888183}
-  priceText: {fileID: 169200863600613250}
+  text: {fileID: 169200863600613250}
 --- !u!1 &169200863600613248
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 169200863600612477}
   - component: {fileID: 169200863600613250}
   m_Layer: 5
-  m_Name: RemainUnit
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

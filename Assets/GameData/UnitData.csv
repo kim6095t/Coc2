@@ -1,5 +1,5 @@
-Name,Type,Power,AttackRate,AttackRadius,MoveSpeed,SearchTowerRadius,SearchWallDistance,Price,Hp,Null
-Goblin,Goblin,3,2,2,2,1,1,10,10,Null
-Archer,Archer,2,2,5,1,1,1,20,10,Null
-Warrier,Warrier,5,2,3,1,1,1,30,10,Null
-Giant,Giant,3,2,2,1,1,1,40,10,Null
+Name,Type,Power,AttackRate,AttackRadius,MoveSpeed,SearchTowerRadius,SearchWallDistance,Price,Hp,UnitCount,Null
+Goblin,Goblin,3,2,2,2,1,1,10,10,5,Null
+Archer,Archer,2,2,5,1,1,1,20,10,5,Null
+Warrier,Warrier,5,2,3,1,1,1,30,10,5,Null
+Giant,Giant,3,2,2,1,1,1,40,10,5,Null

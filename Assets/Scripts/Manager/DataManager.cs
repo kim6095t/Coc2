@@ -55,6 +55,5 @@ public static class DataManager
         PlayerPrefs.DeleteAll();        // 저장소의 모든 데이터 삭제.
         LoadAll();                      // 게임 내 변수의 값 모두 삭제.
         OnInit?.Invoke();               // 초기 값이 필요한 변수 세팅.
-
     }
 }
