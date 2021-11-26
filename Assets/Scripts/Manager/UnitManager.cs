@@ -72,17 +72,14 @@ public class UnitManager : Singletone<UnitManager>
             return;
 
         string loadData = File.ReadAllText(Application.dataPath + "/UnitCountJson.json");
-        UnitCountJson<UnitCountData> unitCountdata = JsonUtility.FromJson<UnitCountJson<UnitCountData>>(loadData);
-        Debug.Log(unitCountdata);
+        UnitCountJson<UnitCountData> json = JsonUtility.FromJson<UnitCountJson<UnitCountData>>(loadData);
 
         for (int i = 0; i < csvDatas.Length; i++)
         {
             UnitStruct newUnit;
             newUnit.newData = new UnitData(csvDatas[i]);
             newUnit.type = (Unit_TYPE)System.Enum.Parse(typeof(Unit_TYPE), newUnit.newData.GetData(KEY_NAME));
-            newUnit.countUnit = 5;
-
-            //newUnit.countUnit = unitCountdata[i].m_count;
+            newUnit.countUnit = json.datas[i].m_count;
 
             unitData[i]= newUnit;
         }
@@ -98,6 +95,7 @@ public class UnitManager : Singletone<UnitManager>
     {
         UnitCountData targetData = new UnitCountData();
 
+        Debug.Log(targetData.m_count);
         targetData.m_count = target.countUnit;
         targetData.m_name = target.type.ToString();
         unitCountdata.Add(targetData);
@@ -107,7 +105,6 @@ public class UnitManager : Singletone<UnitManager>
     {
         for (int i = 0; i < unitData.Length; i++)
             DataSave(unitData[i]);
-
 
         UnitCountJson<UnitCountData> saveData = new UnitCountJson<UnitCountData>(unitCountdata.ToArray());
         File.WriteAllText(Application.dataPath + "/UnitCountJson.json", JsonUtility.ToJson(saveData));

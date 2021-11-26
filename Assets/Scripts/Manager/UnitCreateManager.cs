@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using static Unit;     // Unit 클래스의 영역을 포함하겠다.
 
 
 public class UnitCreateManager : Singletone<UnitCreateManager>
 {
-    [SerializeField] Unit[] unitPrefabs;
+    [System.Serializable]
+    public struct UnitPrefab
+    {
+        public Unit prefab;
+        public Unit_TYPE type;
+    }
+
+    [SerializeField] UnitPrefab[] unitPrefabs;
     [SerializeField] UnitButtonManager unitButtonManager;
     [SerializeField] LayerMask tileMask;
     [SerializeField] ResultMenu resultMenu;
@@ -77,6 +85,18 @@ public class UnitCreateManager : Singletone<UnitCreateManager>
             CreateUnit(setTile);
         }
     }
+
+    private Unit GetPrefab(Unit_TYPE type)
+    {
+        foreach(UnitPrefab unitPrefab in unitPrefabs)
+        {
+            if (unitPrefab.type == type)
+                return unitPrefab.prefab;
+        }
+
+        return null;
+    }
+
     private void CreateUnit(SetTile setTile)
     {
         // 유닛을 선택하지 않고 소환할 시 화면에 에러메세지 출력
@@ -93,7 +113,7 @@ public class UnitCreateManager : Singletone<UnitCreateManager>
         if (UnitManager.Instance.unitData[(int)selectedType].countUnit <= 0)
             return;
 
-        Unit newUnit = Instantiate(unitPrefabs[(int)selectedType]);
+        Unit newUnit = Instantiate(GetPrefab(selectedType));
         newUnit.Setup(UnitManager.Instance.unitData[(int)newUnit.Type].newData);
 
         setTile.SetUnit(newUnit);
@@ -101,6 +121,13 @@ public class UnitCreateManager : Singletone<UnitCreateManager>
         unitButtonManager.OnCreateUnit(newUnit.Type);
 
         TextCollect.Instance.OnFalseAllText();
+    }
+
+    public void OnCreatedUnit(Text unitCount, Text priceText, Unit.Unit_TYPE type)
+    {
+        UnitManager.Instance.unitData[(int)type].countUnit += 1;
+        unitCount.text= string.Format("{0:#,##0}", UnitManager.Instance.unitData[(int)type].countUnit);
+        MyResourceData.Instance.UseJellyToMine(int.Parse(priceText.text));
     }
 
     public void OnSelectedUnit(Unit.Unit_TYPE type)

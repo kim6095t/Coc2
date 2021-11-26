@@ -61,6 +61,18 @@ public class MyResourceData : Singletone<MyResourceData>
         myResource.OnUpdateResource();
     }
 
+    public void UseJellyToMine(int amount)
+    {
+        if (amount > myJelly)
+        {
+            Debug.Log("사용가능 젤리 초과");
+            return;
+        }
+
+        myJelly -= amount;
+        myResource.OnUpdateResource();
+    }
+
     void OnInit()
     {
         maxGold = 10000f;
