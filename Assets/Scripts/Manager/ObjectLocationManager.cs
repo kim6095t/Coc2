@@ -31,8 +31,9 @@ public class ObjectLocationManager : Singletone<ObjectLocationManager>
         base.Awake();
 
         data = new List<Data>();
-        string loadData = File.ReadAllText(Application.dataPath + "/TestJson.json");
+        string loadData = File.ReadAllText(Application.dataPath + "/ObjectLocationJson.json");
         ArrayJson<Data> json = JsonUtility.FromJson<ArrayJson<Data>>(loadData);
+        
 
         for(int i=0; i < json.datas.Length; i++)
         {
@@ -45,7 +46,6 @@ public class ObjectLocationManager : Singletone<ObjectLocationManager>
 
     public void DataSave(GameObject target)
     {
-        Debug.Log("hi");
         Data targetData = new Data();
         string name=target.name.Split('(')[0];
         
@@ -62,6 +62,6 @@ public class ObjectLocationManager : Singletone<ObjectLocationManager>
             DataSave(obj[i]);
 
         ArrayJson<Data> saveData = new ArrayJson<Data>(data.ToArray());
-        File.WriteAllText(Application.dataPath + "/TestJson.json", JsonUtility.ToJson(saveData));
+        File.WriteAllText(Application.dataPath + "/ObjectLocationJson.json", JsonUtility.ToJson(saveData));
     }
 }
