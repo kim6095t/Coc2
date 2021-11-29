@@ -125,9 +125,10 @@ public class UnitCreateManager : Singletone<UnitCreateManager>
 
     public void OnCreatedUnit(Text unitCount, Text priceText, Unit.Unit_TYPE type)
     {
-        UnitManager.Instance.unitData[(int)type].countUnit += 1;
-        unitCount.text= string.Format("{0:#,##0}", UnitManager.Instance.unitData[(int)type].countUnit);
-        MyResourceData.Instance.UseJellyToMine(int.Parse(priceText.text));
+        Debug.Log("hihi");
+        //UnitManager.Instance.unitData[(int)type].countUnit += 1;
+        //unitCount.text= string.Format("{0:#,##0}", UnitManager.Instance.unitData[(int)type].countUnit);
+        //MyResourceData.Instance.UseJellyToMine(int.Parse(priceText.text));
     }
 
     public void OnSelectedUnit(Unit.Unit_TYPE type)
