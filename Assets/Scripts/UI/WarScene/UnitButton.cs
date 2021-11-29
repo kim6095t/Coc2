@@ -40,7 +40,8 @@ public class UnitButton : MonoBehaviour
         price.SetActive(true);
         priceText.text = unitData.GetData(Unit.KEY_PRICE);
 
-        GetComponent<Button>().onClick.AddListener(() => UnitCreateManager.Instance.OnCreatedUnit(unitCount, priceText, type));
+
+        GetComponent<Button>().onClick.AddListener(() => InTownUnitManager.Instance.OnCreatedUnit(unitCount, priceText, type));
     }
 
     public void OnCountUnit(UnitButton unitButton)
