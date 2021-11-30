@@ -9,6 +9,7 @@ public class ButtonUI : MonoBehaviour
     [SerializeField] GameObject GameSelectMenu;
     [SerializeField] GameObject unitCreateScene;
     [SerializeField] ShopScene shopScene;
+    [SerializeField] GameObject settingScene;
 
     public void OnClickAttack()
     {
@@ -19,6 +20,17 @@ public class ButtonUI : MonoBehaviour
     {
         GameSelectMenu.gameObject.SetActive(false);
     }
+
+    public void OnClickSetting()
+    {
+        settingScene.gameObject.SetActive(true);
+    }
+
+    public void OnClickSettingExit()
+    {
+        settingScene.gameObject.SetActive(false);
+    }
+
 
     public void OnClickShop()
     {
@@ -34,7 +46,6 @@ public class ButtonUI : MonoBehaviour
     {
         unitCreateScene.gameObject.SetActive(true);
     }
-
 
     public void OnClickUnitExit()
     {

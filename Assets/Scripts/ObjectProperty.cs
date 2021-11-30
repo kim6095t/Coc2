@@ -18,6 +18,9 @@ public class ObjectProperty : MonoBehaviour
 
     protected void OnMouseDrag()
     {
+        if (!sceneName.Equals("TownScene"))
+            return;
+
         RaycastHit hit;
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out hit);

@@ -61,7 +61,7 @@ public class InTownUnitManager : Singletone<InTownUnitManager>
         else
         {
             int num = int.Parse(lastUnit.slot.unitCount.text);
-            lastUnit.slot.unitCount.text = (num+1).ToString();
+            lastUnit.slot.unitCount.text = (num + 1).ToString();
             unit.slot = lastUnit.slot;
         }
         
@@ -82,7 +82,13 @@ public class InTownUnitManager : Singletone<InTownUnitManager>
             {
                 UnitManager.Instance.unitData[(int)unit.type].countUnit += 1;
                 unit.countText.text = string.Format("{0:#,##0}", UnitManager.Instance.unitData[(int)unit.type].countUnit);
-                Destroy(unit.slot.gameObject);
+
+                //생성해야 할 유닛이 하나면 슬롯 제거
+                if (unit.slot.unitCount.text.ToString().Equals("1"))
+                    Destroy(unit.slot.gameObject);
+                //두개이상이면 카운트하기
+                else
+                    unit.slot.unitCount.text = (int.Parse(unit.slot.unitCount.text) - 1).ToString();
 
                 unitList.RemoveAt(0);
                 useTimer = false;

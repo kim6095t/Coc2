@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-//기존바닥 깔기
-//벽타일은 다른걸로
-//벽은 빌드에서 무시
-
 public class Unit : MonoBehaviour
 {
     public static string KEY_NAME = "Name";
@@ -121,6 +117,8 @@ public class Unit : MonoBehaviour
             destTower = false;
             SearchTower();
         }
+
+
         //길이 검색되었을 때 벽 탐색할수 있게 설정, 타워가 null이 아닐때 가는길에 벽이 있는지 확인
         //Length 1이상이란 것은 최소한 현재위치와 도착지가 설정된 것
         else if (navi.path.corners.Length > 1 && targetTower!=null)
@@ -204,6 +202,7 @@ public class Unit : MonoBehaviour
         Vector3 pivot;
         RaycastHit hit;
 
+
         //가는길 전체 레이를 발사하여 가로막는 벽 탐색
         for(int i=0; i< navi.path.corners.Length - 1; i++)
         {
@@ -215,8 +214,12 @@ public class Unit : MonoBehaviour
             if (Physics.Raycast(pivot, rot.normalized, out hit, pathDistance, searchWallMask))
             {
                 Wall wall = hit.collider.gameObject.GetComponent<Wall>();
+                Debug.Log(2);
+                Debug.Log(hit.collider.gameObject.GetComponent<Wall>());
                 if (wall != null)
                 {
+                    Debug.Log(3);
+
                     targetWall = wall;
                     destWall = true;
                     destTower = false;
