@@ -6,10 +6,10 @@ public class SoundManager : Singletone<SoundManager>
 {
     public enum BGM
     {
-        Forest1,
+        BGM_01,
     }
 
-    [SerializeField] AudioSource audioSource;                   // 스피커.
+    [SerializeField] public AudioSource audioSource;                   // 스피커.
     [SerializeField] AudioClip[] bgms;                          // 배경음악 오디오 파일.
     [SerializeField] float bgmVolume;                           // 배경음 크기.
 

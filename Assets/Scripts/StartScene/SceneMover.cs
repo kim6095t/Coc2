@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneMover : MonoBehaviour
 {
-    void Update()
+    void Start()
     {
-        SceneManager.LoadScene("TownScene");
+        LoadSceneManager.Instance.LoadScene("TownScene");
     }
 }
