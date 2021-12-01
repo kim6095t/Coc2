@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class ReturnTownButton : MonoBehaviour
 {
+    [SerializeField] EndGame endGameScene;
     public void ReturnTown()
     {
-        SceneManager.LoadScene("TownScene");
+        endGameScene.gameObject.SetActive(false);
+        LoadSceneManager.Instance.LoadScene("TownScene");
     }
 }

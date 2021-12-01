@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GoldMine : ObjectProperty
 {
+    [SerializeField] Text getResourceText;
     float time;
     int perSecondGetGold;
     int goldResource;
-    
 
     private void Start()
     {
@@ -40,6 +41,20 @@ public class GoldMine : ObjectProperty
             Debug.Log($"È¹µæÇÑ °ñµå´Â {goldResource}ÀÔ´Ï´Ù");
             MyResourceData.Instance.GetGoldToMine(goldResource);
             time = 0f;
+            SetFloating(gameObject, goldResource.ToString());
         }
+    }
+
+    protected void SetFloating(GameObject vr, string getResource)
+    {
+        FloatingText Ftxt;
+        GameObject TXT = Instantiate(getResourceText.gameObject);
+
+        Vector3 uiPosition = Camera.main.WorldToScreenPoint(vr.transform.position);
+
+        TXT.transform.localPosition = uiPosition;
+        TXT.transform.SetParent(canvas.gameObject.transform);
+        Ftxt = TXT.gameObject.transform.GetComponent<FloatingText>();
+        Ftxt.print(getResource);
     }
 }

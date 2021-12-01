@@ -6,4 +6,5 @@ using UnityEngine.UI;
 public class LoadingSceneUI : MonoBehaviour
 {
     public Image progressBar;
+    public Image backGround;
 }

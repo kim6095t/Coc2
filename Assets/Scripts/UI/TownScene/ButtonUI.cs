@@ -52,13 +52,23 @@ public class ButtonUI : MonoBehaviour
         unitCreateScene.gameObject.SetActive(false);
     }
 
+    private void CloseAllMenu()
+    {
+        GameSelectMenu.gameObject.SetActive(false);
+        shopScene.SwitchResultMenu(false);
+        settingScene.gameObject.SetActive(false);
+        unitCreateScene.gameObject.SetActive(false);
+    }
+
     public void OnClickStage1()
     {
-        SceneManager.LoadScene("WarScene 1");
+        CloseAllMenu();
+        LoadSceneManager.Instance.LoadScene("WarScene 1");
     }
 
     public void OnClickStage2()
     {
-        SceneManager.LoadScene("WarScene 2");
+        CloseAllMenu();
+        LoadSceneManager.Instance.LoadScene("WarScene 2");
     }
 }

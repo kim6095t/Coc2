@@ -9,33 +9,40 @@ public class LoadSceneManager : Singletone<LoadSceneManager>
     [SerializeField] LoadingSceneUI loadUI;
     string nextScene;
 
-    private void Start()
-    {
-        loadUI.progressBar.fillAmount = 0f;
-    }
+
     public void LoadScene(string sceneName) 
     {
         loadUI.gameObject.SetActive(true);
         nextScene = sceneName;
+
+        if(SceneManager.GetActiveScene().name.Equals("StartScene"))
+            loadUI.backGround.sprite = Resources.Load<Sprite>($"LoadingSprite/StartScene");
+        else
+            loadUI.backGround.sprite= Resources.Load<Sprite>($"LoadingSprite/{sceneName}");
+
         StartCoroutine(LoadScene());
-        loadUI.gameObject.SetActive(false);
+        
+    }
+
+    public void Update()
+    {
+        if (SceneManager.GetActiveScene().name.Equals(nextScene))
+            loadUI.gameObject.SetActive(false);
     }
 
     IEnumerator LoadScene() {
-        yield return null; 
+        yield return null;
+        loadUI.progressBar.fillAmount = 0f;
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene); 
         op.allowSceneActivation = false; 
         float timer = 0.0f; 
         
-        while (!op.isDone) { 
+        while (!op.isDone && timer < 3.5f) { 
             yield return null; 
             timer += Time.deltaTime;
 
-            if (op.progress < 0.9f) {
-                loadUI.progressBar.fillAmount = Mathf.Lerp(loadUI.progressBar.fillAmount, op.progress, timer); 
-                if (loadUI.progressBar.fillAmount >= op.progress) { 
-                    timer = 0f; 
-                } 
+            if (op.progress < 0.9f && timer < 2f) {
+                loadUI.progressBar.fillAmount = Mathf.Lerp(loadUI.progressBar.fillAmount, op.progress, Time.deltaTime); 
             } 
             else {
                 loadUI.progressBar.fillAmount = Mathf.Lerp(loadUI.progressBar.fillAmount, 1f, timer); 
