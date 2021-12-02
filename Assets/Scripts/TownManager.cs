@@ -15,6 +15,5 @@ public class TownManager : MonoBehaviour
     public void VolumnChange()
     {
         SoundManager.Instance.audioSource.volume = volumnSlider.value;
-        Debug.Log(volumnSlider.value);
     }
 }

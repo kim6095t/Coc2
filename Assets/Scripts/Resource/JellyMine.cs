@@ -22,7 +22,8 @@ public class JellyMine : ObjectProperty
         time += Time.deltaTime;
         jellyResource=perSecondGetJelly * (int)time;
 
-        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
+        //UI가 열려있으면 안되며 멀티터치가 아닐 때
+        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonUp(0) && touchCount<2)
         {
             GetJelly();
         }
