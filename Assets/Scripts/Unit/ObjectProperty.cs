@@ -11,6 +11,7 @@ public class ObjectProperty : MonoBehaviour
     protected string sceneName;
     LayerMask tileMask;
     protected Canvas canvas;
+    float timer;
 
     protected void Start()
     {
@@ -20,10 +21,18 @@ public class ObjectProperty : MonoBehaviour
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
     }
 
+    protected void OnMouseDown()
+    {
+        timer = 0;
+    }
+
     protected void OnMouseDrag()
     {
-        if (!sceneName.Equals("TownScene"))
+        timer += Time.deltaTime;
+
+        if (!sceneName.Equals("TownScene") || timer<0.2f)
             return;
+
 
         RaycastHit hit;
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);

@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class JellyMine : ObjectProperty
 {
+    [SerializeField] Text getResourceText;
     float time;
     int perSecondGetJelly;
     int jellyResource;
@@ -19,7 +22,7 @@ public class JellyMine : ObjectProperty
         time += Time.deltaTime;
         jellyResource=perSecondGetJelly * (int)time;
 
-        if (Input.GetMouseButtonDown(0))
+        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
         {
             GetJelly();
         }
@@ -39,6 +42,23 @@ public class JellyMine : ObjectProperty
             Debug.Log($"È¹µæÇÑ Á©¸®´Â {jellyResource}ÀÔ´Ï´Ù");
             MyResourceData.Instance.GetJellyToMine(jellyResource);
             time = 0f;
+            SetFloating(gameObject, jellyResource.ToString());
         }
+    }
+
+    private void SetFloating(GameObject vr, string getResource)
+    {
+        FloatingText Ftxt;
+
+        getResourceText.color = new Color(0.5f,0.5f,0.5f);
+        GameObject TXT = Instantiate(getResourceText.gameObject);
+
+        Vector3 uiPosition = Camera.main.WorldToScreenPoint(vr.transform.position);
+
+        uiPosition.y += 50f;
+        TXT.transform.localPosition = uiPosition;
+        TXT.transform.SetParent(canvas.gameObject.transform);
+        Ftxt = TXT.gameObject.transform.GetComponent<FloatingText>();
+        Ftxt.print(getResource);
     }
 }
