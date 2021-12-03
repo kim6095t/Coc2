@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93041991f7caea4f80e9be159f5900c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 4900000, guid: 4585b4d52befe21419f9ff47dbf3f893, type: 3}
   getResourceText: {fileID: 1991280433675695435, guid: 7e28dda1ef7b06e45855b8fdc43d0fdd, type: 3}
 --- !u!65 &-6911864998469292500
 BoxCollider:

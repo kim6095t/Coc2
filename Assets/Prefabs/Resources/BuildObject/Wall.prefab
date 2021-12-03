@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b47ef9167d60c045aa4ead38bf4b602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 4900000, guid: 878fd9fee96e41f449b048f2fc03cb6f, type: 3}
   Hp: 50
 --- !u!114 &8932493414745201413
 MonoBehaviour:
@@ -147,7 +148,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3190898502346571070}
-  - {fileID: 370009157962320443}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -212,80 +212,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6223386039151176284, guid: 2e8e35039a5a5de429bb5ef87354e790, type: 3}
   m_PrefabInstance: {fileID: 7866213336447688103}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8317506833755903613
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 238707850825311727}
-    m_Modifications:
-    - target: {fileID: 4305935608517253113, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_Name
-      value: floorTile2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305935608517253113, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305935608517253113, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
---- !u!4 &370009157962320443 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8525086752683842630, guid: e3aeab9165f12c145af8d281cb800e41, type: 3}
-  m_PrefabInstance: {fileID: 8317506833755903613}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8781094764401389184
 PrefabInstance:

@@ -7,6 +7,8 @@ public class ObjectInformation : MonoBehaviour
 {
     [SerializeField] Text title;
     [SerializeField] ObjectInfButton infButton;
+    [SerializeField] InformationScene informationScene;
+    [SerializeField] UpgradeScene upgradeScene;
 
     public void ChildSetActive()
     {
@@ -27,5 +29,15 @@ public class ObjectInformation : MonoBehaviour
             Transform trChild = infButton.transform.GetChild(i);
             trChild.gameObject.SetActive(true);
         }
+    }
+
+    public void GetSettingData(Dictionary<string, string> datas)
+    {
+        informationScene.GetSettingData(datas);
+    }
+
+    public void GetNowResourceData(Dictionary<string, string> datas)
+    {
+        informationScene.GetSettingData(datas);
     }
 }

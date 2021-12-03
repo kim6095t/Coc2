@@ -5,11 +5,11 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-
 [System.Serializable]
 public class Data
 {
     public string m_name;
+    public int m_level;
     public Vector3 m_vecPositon;
 }
 
@@ -46,11 +46,16 @@ public class ObjectLocationManager : Singletone<ObjectLocationManager>
 
     public void DataSave(GameObject target)
     {
+        ObjectProperty targetLevel = target.GetComponent<ObjectProperty>();
+
         Data targetData = new Data();
         string name=target.name.Split('(')[0];
-        
+        int level = targetLevel.nowLevel;
+
         targetData.m_name = name;
+        targetData.m_level = level;
         targetData.m_vecPositon = target.transform.position;
+
 
         data.Add(targetData);
     }

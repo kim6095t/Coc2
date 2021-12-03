@@ -9,19 +9,21 @@ public class GoldMine : ObjectProperty
     [SerializeField] Text getResourceText;
     float time;
     int perSecondGetGold;
+    int maxAmount;
     int goldResource;
 
     private void Start()
     {
         base.Start();
-        perSecondGetGold = 10;
+        perSecondGetGold = int.Parse(csvDatas[nowLevel]["Output"]);
+        maxAmount= int.Parse(csvDatas[nowLevel]["MaxAmount"]);
     }
 
     private void Update()
     {
         time += Time.deltaTime;
-        goldResource = perSecondGetGold * (int)time;
-
+        goldResource = Mathf.Clamp(perSecondGetGold * (int)time, 0, maxAmount);
+        
         //UI가 열려있으면 안되며 멀티터치가 아닐 때
         if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonUp(0) && touchCount < 2)
         {
