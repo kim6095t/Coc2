@@ -12,6 +12,7 @@ public class ObjectProperty : MonoBehaviour
     protected Canvas canvas;
     float timer;
     protected int touchCount;
+    protected ObjectInformation objectInfScene;
 
     protected void Start()
     {
@@ -22,16 +23,23 @@ public class ObjectProperty : MonoBehaviour
         sceneName = SceneManager.GetActiveScene().name;
         tileMask = 1<<LayerMask.NameToLayer("Floor");
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+
+        if (sceneName.Equals("TownScene"))
+            objectInfScene = GameObject.Find("ObjectInformation").GetComponent<ObjectInformation>();
     }
 
     protected void OnMouseDown()
     {
+        //최초클릭시부터 시간측정을 위한 초기화
         timer = 0;
     }
 
     protected void OnMouseUp()
     {
-        Debug.Log(PinchZoom.Instance.isObjectMove);
+        //물체가 드래그 되지 않았다면(OnMouseDrag() 코드확인)
+        if (!PinchZoom.Instance.isObjectMove)
+            objectInfScene.ChildSetActive();
+
         PinchZoom.Instance.isObjectMove = false;
     }
 
@@ -41,8 +49,6 @@ public class ObjectProperty : MonoBehaviour
 
         if (!sceneName.Equals("TownScene") || timer<0.2f || touchCount >1)
             return;
-
-        PinchZoom.Instance.isObjectMove = true;
 
         RaycastHit hit;
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -54,8 +60,7 @@ public class ObjectProperty : MonoBehaviour
         if (Physics.Raycast(ray, out hit, float.MaxValue, tileMask))
         {
             transform.position = hit.transform.position;
+            PinchZoom.Instance.isObjectMove = true;
         }
     }
-
-
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1464,6 +1464,7 @@ GameObject:
   - component: {fileID: 75591785}
   - component: {fileID: 75591787}
   - component: {fileID: 75591786}
+  - component: {fileID: 75591788}
   m_Layer: 5
   m_Name: InformationScene
   m_TagString: Untagged
@@ -1534,6 +1535,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75591784}
   m_CullTransparentMesh: 1
+--- !u!114 &75591788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75591784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cfa86a600cb71e40bc31fd00111bb8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &75623799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7744,9 +7757,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1731994508}
-        m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
-        m_MethodName: OnClickSettingExit
+      - m_Target: {fileID: 1520680304}
+        m_TargetAssemblyTypeName: ObjectInfButton, Assembly-CSharp
+        m_MethodName: ExitUpgradeScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8186,9 +8199,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1731994508}
-        m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
-        m_MethodName: OnClickSettingExit
+      - m_Target: {fileID: 1520680304}
+        m_TargetAssemblyTypeName: ObjectInfButton, Assembly-CSharp
+        m_MethodName: ExitInformationScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19985,6 +19998,7 @@ GameObject:
   - component: {fileID: 1238856266}
   - component: {fileID: 1238856268}
   - component: {fileID: 1238856267}
+  - component: {fileID: 1238856269}
   m_Layer: 5
   m_Name: UpgradeScene
   m_TagString: Untagged
@@ -20056,6 +20070,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238856265}
   m_CullTransparentMesh: 1
+--- !u!114 &1238856269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238856265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946d3d05fe54d754a80546f3eda5c059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1243263355
 GameObject:
   m_ObjectHideFlags: 0
@@ -24561,7 +24587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1520680301
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24635,8 +24661,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30dd6974066c8a744a0ed7623feacaa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: {fileID: 2059040431}
   informationButton: {fileID: 1600073291}
   upgradeButton: {fileID: 604896658}
+  informationScene: {fileID: 75591788}
+  upgradeScene: {fileID: 1238856269}
 --- !u!1001 &1524457320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25025,7 +25054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1548599366
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33240,7 +33269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2059040430
 RectTransform:
   m_ObjectHideFlags: 0

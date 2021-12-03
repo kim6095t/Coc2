@@ -5,17 +5,37 @@ using UnityEngine.UI;
 
 public class ObjectInfButton : MonoBehaviour
 {
+    [SerializeField] Text title;
     [SerializeField] Image informationButton;
     [SerializeField] Image upgradeButton;
+    [SerializeField] InformationScene informationScene;
+    [SerializeField] UpgradeScene upgradeScene;
 
     public void ClickInfBtn()
     {
-        Debug.Log("ClickImfButton");
+        informationScene.gameObject.SetActive(true);
+
+        title.gameObject.SetActive(false);
+        informationButton.gameObject.SetActive(false);
+        upgradeButton.gameObject.SetActive(false);
     }
 
     public void ClickUpgradeBtn()
     {
-        Debug.Log("ClickUpgradeBtn");
+        upgradeScene.gameObject.SetActive(true);
+
+        title.gameObject.SetActive(false);
+        informationButton.gameObject.SetActive(false);
+        upgradeButton.gameObject.SetActive(false);
     }
 
+
+    public void ExitInformationScene()
+    {
+        informationScene.gameObject.SetActive(false);
+    }
+    public void ExitUpgradeScene()
+    {
+        upgradeScene.gameObject.SetActive(false);
+    }
 }
