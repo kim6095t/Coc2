@@ -7,7 +7,7 @@ public class UnitButton : MonoBehaviour
 {
     [SerializeField] Image unitImage;
     [SerializeField] public Text unitCount;
-    [SerializeField] GameObject price;
+    [SerializeField] Image JellyImage;
     [SerializeField] public Text priceText;
 
     Unit.Unit_TYPE type;
@@ -37,7 +37,8 @@ public class UnitButton : MonoBehaviour
         unitImage.sprite = Resources.Load<Sprite>($"UnitSprite/{type}");
         unitCount.text = string.Format("{0:#,##0}", UnitManager.Instance.unitData[(int)type].countUnit);
 
-        price.SetActive(true);
+        JellyImage.gameObject.SetActive(true);
+        priceText.gameObject.SetActive(true);
         priceText.text = unitData.GetData(Unit.KEY_PRICE);
 
 

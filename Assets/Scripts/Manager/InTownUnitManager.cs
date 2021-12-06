@@ -12,7 +12,7 @@ public class InTownUnitManager : Singletone<InTownUnitManager>
     bool useTimer;
     unitStruct lastUnit;
     List<unitStruct> unitList;
-
+    int unitCount;
 
     struct unitStruct
     {
@@ -53,15 +53,17 @@ public class InTownUnitManager : Singletone<InTownUnitManager>
             CheckUnitSlot slot = Instantiate(checkUnit);
             slot.transform.parent = trans;
             slot.unitImage.sprite = Resources.Load<Sprite>($"UnitSprite/{type}");
-            slot.unitCount.text = "1";
+            slot.unitCount.text = "×1";
             unit.slot = slot;
 
             lastUnit = unit;
         }
         else
         {
-            int num = int.Parse(lastUnit.slot.unitCount.text);
-            lastUnit.slot.unitCount.text = (num + 1).ToString();
+            Debug.Log(1);
+            string unitNum =lastUnit.slot.unitCount.text.Split('×')[1];
+            int num = int.Parse(unitNum) + 1;
+            lastUnit.slot.unitCount.text = $"×{num}";
             unit.slot = lastUnit.slot;
         }
         
@@ -83,13 +85,17 @@ public class InTownUnitManager : Singletone<InTownUnitManager>
                 UnitManager.Instance.unitData[(int)unit.type].countUnit += 1;
                 unit.countText.text = string.Format("{0:#,##0}", UnitManager.Instance.unitData[(int)unit.type].countUnit);
 
+                Debug.Log(unit.slot.unitCount.text);
                 //생성해야 할 유닛이 하나면 슬롯 제거
-                if (unit.slot.unitCount.text.ToString().Equals("1"))
+                if (unit.slot.unitCount.text.ToString().Equals("×1"))
                     Destroy(unit.slot.gameObject);
                 //두개이상이면 카운트하기
                 else
-                    unit.slot.unitCount.text = (int.Parse(unit.slot.unitCount.text) - 1).ToString();
-
+                {
+                    string unitNum = lastUnit.slot.unitCount.text.Split('×')[1];
+                    int num = int.Parse(unitNum) - 1;
+                    unit.slot.unitCount.text = $"×{num}";
+                }
                 unitList.RemoveAt(0);
                 useTimer = false;
                 break;

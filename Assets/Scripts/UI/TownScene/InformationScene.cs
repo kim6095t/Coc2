@@ -8,22 +8,25 @@ public class InformationScene : MonoBehaviour
     [SerializeField] Image mainImage;
     [SerializeField] Text objectName;
     [SerializeField] Text explain;
-    [SerializeField] StatusBar AmountBar;
-    [SerializeField] StatusBar OutPutBar;
-    [SerializeField] StatusBar HpBar;
+    [SerializeField] InformationSceneBar OutPutBar;
+    [SerializeField] InformationSceneBar HpBar;
 
-    public void GetSettingData(Dictionary<string, string> datas)
+    public void GetSettingData(Dictionary<string, string>[] datas, int level)
     {
-        mainImage.sprite = Resources.Load<Sprite>($"ShopSprite/{datas["Name"]}");
-        objectName.text = $"{ datas["Name"]} ({datas["Level"]}레벨)";
-        explain.text = datas["Explain"];
+        //공통된 정보
+        mainImage.sprite = Resources.Load<Sprite>($"ShopSprite/{datas[level]["Name"]}");
+        objectName.text = $"{ datas[level]["Name"]} ({datas[level]["Level"]}레벨)";
+        explain.text = datas[level]["Explain"];
 
-        if (datas["Name"].Equals("GoldBox"))
+
+        //자원건물의 추가적인 정보
+        if (datas[level]["Name"].Equals("GoldBox") || datas[level]["Name"].Equals("JellyBox"))
         {
-            AmountBar.text.text = $"용량: 1/{ datas["MaxAmount"]}";
-            OutPutBar.text.text = $"생산량: 시간당 {datas["Output"]}";
-            //OutPutBar.bar.fillAmount=
-            HpBar.text.text = $"HP: {datas["Hp"]}/{datas["Hp"]}";
+            OutPutBar.text.text = $"생산량: 시간당 {datas[level]["Output"]}";
+            OutPutBar.bar.fillAmount = float.Parse(datas[level]["Output"])/ float.Parse(datas[datas.Length -1]["Output"]);
+
+            HpBar.text.text = $"HP: {datas[level]["Hp"]}/{datas[level]["Hp"]}";
+            HpBar.bar.fillAmount = float.Parse(datas[level]["Hp"])/ float.Parse(datas[datas.Length - 1]["Hp"]);
         }
     }
 }

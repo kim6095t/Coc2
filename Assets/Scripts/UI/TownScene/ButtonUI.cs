@@ -58,6 +58,7 @@ public class ButtonUI : MonoBehaviour
         shopScene.SwitchResultMenu(false);
         settingScene.gameObject.SetActive(false);
         unitCreateScene.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void OnClickStage1()

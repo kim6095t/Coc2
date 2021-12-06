@@ -18,10 +18,9 @@ public class ObjectProperty : MonoBehaviour
     [SerializeField] protected TextAsset data;
 
 
-    //TownScene¿¡¼­¸¸ »ç¿ë°¡´ÉÇÏ°Ô
+    //TownSceneï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ë°¡ï¿½ï¿½ï¿½Ï°ï¿½
     protected ObjectInformation objectInfScene;
     protected Text objectInfTitle;
-
 
     enum level
     {
@@ -29,35 +28,39 @@ public class ObjectProperty : MonoBehaviour
         level2,
         level3,
 
-        count,
+        maxLevel,
     }
 
 
-    //·¹º§ Á¶Á¤ÇØº¸±â
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½
     protected void Start()
     {
-        nowLevel = (int)level.level3;
-        //µ¥ÀÌÅÍ ÀÐ¾î¿À±â
+        if (nowLevel == null)
+        {
+            nowLevel = (int)level.level1;
+        }
+
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½
         csvDatas = CSVReader.ReadCSV(data);
-        
-        //ÇöÀç ÅÍÄ¡ °³¼ö¸¦ ¹Þ¾Æ¿Â´Ù 
+
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Â´ï¿½ 
         touchCount = Input.touchCount;
 
         mainCamera = Camera.main;
         sceneName = SceneManager.GetActiveScene().name;
-        tileMask = 1<<LayerMask.NameToLayer("Floor");
+        tileMask = 1 << LayerMask.NameToLayer("Floor");
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
         if (sceneName.Equals("TownScene"))
         {
             objectInfScene = GameObject.Find("ObjectInformation").GetComponent<ObjectInformation>();
-            objectInfTitle= objectInfScene.transform.FindChild("objectInfTitle").GetComponent<Text>();
+            objectInfTitle = objectInfScene.transform.Find("objectInfTitle").GetComponent<Text>();
         }
     }
 
     protected void OnMouseDown()
     {
-        //ÃÖÃÊÅ¬¸¯½ÃºÎÅÍ ½Ã°£ÃøÁ¤À» À§ÇÑ ÃÊ±âÈ­
+        //ï¿½ï¿½ï¿½ï¿½Å¬ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         timer = 0;
     }
 
@@ -65,22 +68,21 @@ public class ObjectProperty : MonoBehaviour
     {
         PinchZoom.Instance.isObjectMove = false;
 
-        //¹°Ã¼°¡ µå·¡±× µÇÁö ¾Ê¾Ò´Ù¸é Á¤º¸¶ç¿ì±â(OnMouseDrag() ÄÚµåÈ®ÀÎ)
+        //ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(OnMouseDrag() ï¿½Úµï¿½È®ï¿½ï¿½)
         if (!PinchZoom.Instance.isObjectMove && sceneName.Equals("TownScene"))
         {
             objectInfScene.ChildSetActive();
-            objectInfScene.GetSettingData(csvDatas[nowLevel]);
+            objectInfScene.GetSettingData(csvDatas, nowLevel, gameObject.transform.position);
 
-            objectInfTitle.text = $"{ csvDatas[nowLevel]["Name"]} ({csvDatas[nowLevel]["Level"]}·¹º§)";
+            objectInfTitle.text = $"{ csvDatas[nowLevel]["Name"]} ({csvDatas[nowLevel]["Level"]}ï¿½ï¿½ï¿½ï¿½)";
         }
-
     }
 
     protected void OnMouseDrag()
     {
         timer += Time.deltaTime;
 
-        if (!sceneName.Equals("TownScene") || timer<0.2f || touchCount >1)
+        if (!sceneName.Equals("TownScene") || timer < 0.2f || touchCount > 1)
             return;
 
         RaycastHit hit;

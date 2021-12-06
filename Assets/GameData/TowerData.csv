@@ -1,4 +1,4 @@
-Name,Level,Explain,Null
-Tower,1,Level 1,Null
-Tower,2,Level 2,Null
-Tower,3,Level 3,Null
+Name,Level,UpgradePrice,Explain,Null
+Tower,1,1000,Level 1,Null
+Tower,2,2000,Level 2,Null
+Tower,3,MAX,Level 3,Null

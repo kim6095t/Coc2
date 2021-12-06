@@ -37,9 +37,10 @@ public class ObjectLocationManager : Singletone<ObjectLocationManager>
 
         for(int i=0; i < json.datas.Length; i++)
         {
-            GameObject prefab= (GameObject)AssetDatabase.LoadAssetAtPath($"Assets/Prefabs/Resources/BuildObject/" +
-                $"{json.datas[i].m_name}.prefab", typeof(GameObject));
-            GameObject gameObject = Instantiate(prefab);
+            ObjectProperty prefab = (ObjectProperty)AssetDatabase.LoadAssetAtPath($"Assets/Prefabs/Resources/BuildObject/" +
+                $"{json.datas[i].m_name}.prefab", typeof(ObjectProperty));
+            ObjectProperty gameObject = Instantiate(prefab);
+            gameObject.nowLevel = json.datas[i].m_level;
             gameObject.transform.position = json.datas[i].m_vecPositon;
         }
     }

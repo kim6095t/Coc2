@@ -9,12 +9,14 @@ public class JellyMine : ObjectProperty
     [SerializeField] Text getResourceText;
     float time;
     int perSecondGetJelly;
+    int maxAmount;
     int jellyResource;
 
     private void Start()
     {
         base.Start();
-        perSecondGetJelly = 10;
+        perSecondGetJelly = int.Parse(csvDatas[nowLevel]["Output"]);
+        maxAmount = int.Parse(csvDatas[nowLevel]["MaxAmount"]);
     }
 
     private void Update()
