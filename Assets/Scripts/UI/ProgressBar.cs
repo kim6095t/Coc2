@@ -7,11 +7,13 @@ public class ProgressBar : MonoBehaviour
 {
     public Image progressBar;
     public Image backGround;
+    UpgradeScene upgradeScene;
 
     float time;
     float upgradeCompleteTime;
     private void Start()
     {
+        upgradeScene=GameObject.Find("ObjectInformation").transform.Find("UpgradeScene").GetComponent<UpgradeScene>();
         upgradeCompleteTime = 3f;
         progressBar.fillAmount = 0f;
         StartCoroutine(FilledGage());
@@ -25,6 +27,7 @@ public class ProgressBar : MonoBehaviour
             progressBar.fillAmount = time / upgradeCompleteTime;
             yield return null;
         }
+        upgradeScene.OnUpgrade();
         Destroy(gameObject);
     }
 }

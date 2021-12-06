@@ -11,8 +11,11 @@ public class InformationScene : MonoBehaviour
     [SerializeField] InformationSceneBar OutPutBar;
     [SerializeField] InformationSceneBar HpBar;
 
-    public void GetSettingData(Dictionary<string, string>[] datas, int level)
+    public void GetSettingData(ObjectProperty target)
     {
+        Dictionary<string, string>[] datas = target.CsvDatas;
+        int level = target.NowLevel;
+
         //공통된 정보
         mainImage.sprite = Resources.Load<Sprite>($"ShopSprite/{datas[level]["Name"]}");
         objectName.text = $"{ datas[level]["Name"]} ({datas[level]["Level"]}레벨)";

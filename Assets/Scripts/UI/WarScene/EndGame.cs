@@ -33,14 +33,16 @@ public class EndGame : MonoBehaviour
 
     IEnumerator CountStar(int target)
     {
+        Debug.Log(target);
         float current = 0;
-        float duration = 3f; // 카운팅에 걸리는 시간 설정. 
+        float duration = 1.5f; // 카운팅에 걸리는 시간 설정. 
         float offset = (target - current) / duration;
 
         while (current < target)
         {
             current += offset * Time.deltaTime;
             stars[(int)offset].color = new Color(255, 255, 255, 255);
+            Debug.Log((int)offset);
 
             yield return null;
 
@@ -52,7 +54,7 @@ public class EndGame : MonoBehaviour
     IEnumerator Count(float target,  Text Label)
     {
         float current = 0;
-        float duration = 3f; // 카운팅에 걸리는 시간 설정. 
+        float duration = 1.5f; // 카운팅에 걸리는 시간 설정. 
         float offset = (target - current) / duration;
 
         while (current < target)

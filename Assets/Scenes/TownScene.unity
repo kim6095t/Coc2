@@ -44646,7 +44646,8 @@ MonoBehaviour:
   objectName: {fileID: 29063402}
   OutPutBar: {fileID: 1577999401}
   HpBar: {fileID: 19701109}
-  upgradeBtn: {fileID: 1566868862}
+  upgradeBtnText: {fileID: 1566868862}
+  upgradeBtn: {fileID: 234560922}
   objectInformation: {fileID: 1548599367}
   progressBar: {fileID: 3516311641440016190, guid: 36818775960747943a4af8d08fa6d2ad, type: 3}
 --- !u!1 &1243263355

@@ -31,13 +31,9 @@ public class ObjectInformation : MonoBehaviour
         }
     }
 
-    public void GetSettingData(Dictionary<string, string>[] datas, int level, Vector3 pos)
+    public void GetSettingData(ObjectProperty target)
     {
-        informationScene.GetSettingData(datas,level);
-        upgradeScene.GetSettingData(datas,level,pos);
-    }
-    public void Upgrade(int level)
-    {
-
+        informationScene.GetSettingData(target);
+        upgradeScene.GetSettingData(target);
     }
 }

@@ -17,6 +17,10 @@ public class ObjectProperty : MonoBehaviour
 
     [SerializeField] protected TextAsset data;
 
+    public Dictionary<string, string>[] CsvDatas => csvDatas;
+    public int NowLevel => nowLevel;
+
+
 
     //TownScene������ ��밡���ϰ�
     protected ObjectInformation objectInfScene;
@@ -72,11 +76,17 @@ public class ObjectProperty : MonoBehaviour
         if (!PinchZoom.Instance.isObjectMove && sceneName.Equals("TownScene"))
         {
             objectInfScene.ChildSetActive();
-            objectInfScene.GetSettingData(csvDatas, nowLevel, gameObject.transform.position);
+            objectInfScene.GetSettingData(this);
 
             objectInfTitle.text = $"{ csvDatas[nowLevel]["Name"]} ({csvDatas[nowLevel]["Level"]}����)";
         }
     }
+
+    public void OnUpgradeTower(int level)
+    {
+        nowLevel = level;
+    }
+
 
     protected void OnMouseDrag()
     {

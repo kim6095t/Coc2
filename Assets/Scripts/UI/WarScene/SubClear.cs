@@ -30,7 +30,7 @@ public class SubClear : MonoBehaviour
 
         for (int i = 0; i < rectTransform.Length; i++)
         {
-            if (StageClearPersent.Instance.OnIsActiveStar(i) == false && rect)
+            if (StageClearPersent.Instance.OnIsActiveStar(i) == false)
             {
                 rect = rectTransform[i];
                 chanSizeStar = changeSizeStar[i];
